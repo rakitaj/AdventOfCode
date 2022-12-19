@@ -11,7 +11,7 @@ def max_sum_of_lists(numbers_matrix: list[list[int]]) -> int:
 
 
 def load_and_parse() -> list[list[int]]:
-    loader = DataLoader(2022, "day01-1.txt")
+    loader = DataLoader(2022, "day01.txt")
     data = loader.readlines_str()
     result: list[list[int]] = list()
     intermediate: list[int] = list()
@@ -24,13 +24,13 @@ def load_and_parse() -> list[list[int]]:
     return result
 
 
-def day01_part01_answer() -> str:
+def part01_answer() -> str:
     list_of_lists = load_and_parse()
     answer = max_sum_of_lists(list_of_lists)
     return str(answer)
 
 
-def day01_part02_answer() -> str:
+def part02_answer() -> str:
     list_of_lists = load_and_parse()
     sums: list[int] = list()
     for l in list_of_lists:

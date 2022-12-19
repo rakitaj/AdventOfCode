@@ -1,7 +1,11 @@
-from src.aoc2022.day01 import day01_part01_answer, day01_part02_answer
+import src.aoc2022.day01
+import src.aoc2022.day02
 
 print("Advent of Code 2022: 1-1")
-print(day01_part01_answer())
+print(src.aoc2022.day01.part01_answer())
 
 print("Advent of Code 2022: 1-2")
-print(day01_part02_answer())
+print(src.aoc2022.day01.part02_answer())
+
+print("Advent of Code 2022: 2-1")
+print(src.aoc2022.day02.part01_answer())
