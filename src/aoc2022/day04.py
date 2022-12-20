@@ -12,14 +12,11 @@ class SegmentLocations:
     b_end: int
 
     def any_overlap(self) -> bool:
-        diff = self.b_start - self.a_end
-        return diff <= 0
-        # return (
-        #     self.start_one in range(self.start_one, self.end_two + 1)
-        #     or self.end_one in range(self.start_one, self.end_two + 1)
-        #     or self.start_one in range(self.start_one, self.end_one + 1)
-        #     or self.end_two in range(self.start_one, self.end_one + 1)
-        # )
+        return (
+            self.a_end >= self.b_start
+            and self.a_start <= self.b_end
+            or (self.b_end >= self.a_start and self.b_start <= self.a_end)
+        )
 
 
 def load_and_parse() -> list[SegmentLocations]:
@@ -57,5 +54,4 @@ def part02_answer() -> str:
     for segment_pair in segment_pairs_list:
         if segment_pair.any_overlap():
             total += 1
-        # total += segment_pair.any_overlap()
     return str(total)
