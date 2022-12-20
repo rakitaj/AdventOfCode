@@ -1,12 +1,13 @@
 {
     "python.formatting.provider": "black",
     "editor.formatOnSave": true,
-    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.typeCheckingMode": "strict",
     "python.linting.mypyEnabled": true,
     "files.exclude": {
         "**/.git": true,
         "**/__pycache__": true,
-        ".mypy_cache": true
+        ".mypy_cache": true,
+        ".pytest_cache": true
     },
     "python.testing.pytestArgs": [
         "src"
