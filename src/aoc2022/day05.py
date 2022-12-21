@@ -70,7 +70,29 @@ def execute_instructions(s_and_i: StacksAndInstructions) -> list[str]:
     return result
 
 
+def execute_instructions_2(s_and_i: StacksAndInstructions) -> list[str]:
+    stacks = s_and_i.stacks
+    for instruction in s_and_i.instructions:
+        captures = instruction_patern.findall(instruction)
+        count, source, target = captures[0]
+        temp: list[str] = list()
+        for _ in range(int(count)):
+            temp.append(stacks[int(source) - 1].pop())
+        for _ in range(int(count)):
+            stacks[int(target) - 1].append(temp.pop())
+    result: list[str] = list()
+    for stack in stacks:
+        result.append(stack.pop())
+    return result
+
+
 def part01_answer() -> str:
     stacks_and_instructions = load_and_parse()
     result = execute_instructions(stacks_and_instructions)
+    return "".join(result)
+
+
+def part02_answer() -> str:
+    stacks_and_instructions = load_and_parse()
+    result = execute_instructions_2(stacks_and_instructions)
     return "".join(result)

@@ -1,5 +1,11 @@
 from collections import deque
-from src.aoc2022.day05 import find_quantity, populate_stacks, parse_lines, execute_instructions
+from src.aoc2022.day05 import (
+    find_quantity,
+    populate_stacks,
+    parse_lines,
+    execute_instructions,
+    execute_instructions_2,
+)
 
 
 def test_find_quantity():
@@ -24,7 +30,7 @@ def test_populate_stacks():
     assert result[1] == deque(["M", "C", "D"])
 
 
-def test_puzzle_flow():
+def test_part_1_algorithm():
     lines = """    [D]    
 [N] [C]    
 [Z] [M] [P]
@@ -37,3 +43,18 @@ move 1 from 1 to 2""".splitlines()
     stacks_and_instructions = parse_lines(lines)
     actual = execute_instructions(stacks_and_instructions)
     assert actual == ["C", "M", "Z"]
+
+
+def test_part_2_algorithm():
+    lines = """    [D]    
+[N] [C]    
+[Z] [M] [P]
+ 1   2   3 
+
+move 1 from 2 to 1
+move 3 from 1 to 3
+move 2 from 2 to 1
+move 1 from 1 to 2""".splitlines()
+    stacks_and_instructions = parse_lines(lines)
+    actual = execute_instructions_2(stacks_and_instructions)
+    assert actual == ["M", "C", "D"]
