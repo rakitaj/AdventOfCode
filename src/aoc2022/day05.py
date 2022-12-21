@@ -11,14 +11,20 @@ class StacksAndInstructions:
 
 
 num_pattern = re.compile("(\\d+)")
+instruction_patern = re.compile("move (\\d+) from (\\d+) to (\\d+)")
 
 
 def load_and_parse() -> StacksAndInstructions:
     loader = DataLoader(2022, "day05.txt")
     data = loader.readlines_str()
-    num_stacks, line_num_end_stacks_setup = find_quantity(data)
-    stacks = populate_stacks(data, num_stacks, line_num_end_stacks_setup)
-    return StacksAndInstructions(stacks, data[line_num_end_stacks_setup:])
+    result = parse_lines(data)
+    return result
+
+
+def parse_lines(lines: list[str]) -> StacksAndInstructions:
+    num_stacks, line_num_end_stacks_setup = find_quantity(lines)
+    stacks = populate_stacks(lines, num_stacks, line_num_end_stacks_setup)
+    return StacksAndInstructions(stacks, lines[line_num_end_stacks_setup + 1 :])
 
 
 def find_quantity(all_data: list[str]) -> tuple[int, int]:
@@ -38,13 +44,33 @@ def find_quantity(all_data: list[str]) -> tuple[int, int]:
 
 
 def populate_stacks(data: list[str], num_stacks: int, stop_at: int) -> list[deque[str]]:
-    char_regex = re.compile("(\\w)")
     stacks: list[deque[str]] = list()
     for _ in range(num_stacks):
         stacks.append(deque())
-    for i in range(stop_at - 2, 0, -1):
-        columns = data[i].split()
-        for ii, col in enumerate(columns):
-            char = char_regex.match(col, 0)
-            stacks[ii].append(char)
+    for i in range(stop_at - 2, -1, -1):
+        for j in range(num_stacks):
+            offset = (j * 4) + 1
+            char = data[i][offset : offset + 1]
+            if not char.isspace():
+                stacks[j].append(char)
     return stacks
+
+
+def execute_instructions(s_and_i: StacksAndInstructions) -> list[str]:
+    stacks = s_and_i.stacks
+    for instruction in s_and_i.instructions:
+        captures = instruction_patern.findall(instruction)
+        count, source, target = captures[0]
+        for _ in range(int(count)):
+            temp = stacks[int(source) - 1].pop()
+            stacks[int(target) - 1].append(temp)
+    result: list[str] = list()
+    for stack in stacks:
+        result.append(stack.pop())
+    return result
+
+
+def part01_answer() -> str:
+    stacks_and_instructions = load_and_parse()
+    result = execute_instructions(stacks_and_instructions)
+    return "".join(result)
