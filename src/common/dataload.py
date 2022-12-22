@@ -14,3 +14,7 @@ class DataLoader:
     def readlines_str(self) -> list[str]:
         with open(self.filepath, "r") as fp:
             return fp.readlines()
+
+    def read(self) -> str:
+        with open(self.filepath, "r") as fp:
+            return fp.read()
