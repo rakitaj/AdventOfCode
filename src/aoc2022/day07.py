@@ -2,6 +2,8 @@ from __future__ import annotations
 from typing import cast
 import parse
 
+from src.common.dataload import DataLoader
+
 lex_file = parse.compile("{filesize} {filename}")
 
 
@@ -27,6 +29,14 @@ class DirNode:
                     dir.parent = self
                     return dir
         raise KeyError(f"Node: {self.name} Message: Can't get to {target} node")
+
+    def size(self) -> int:
+        total = 0
+        for _, filesize in self.files.items():
+            total += filesize
+        for dir in self.dirs:
+            total += dir.size()
+        return total
 
 
 class FileSystemParser:
@@ -87,3 +97,52 @@ class Lexer:
             if token:
                 result.append(token)
         return result
+
+
+def filter_and_sum(node: DirNode, acc: int) -> int:
+    for dir in node.dirs:
+        dir_sum = dir.size()
+        if dir_sum <= 100000:
+            acc += dir_sum
+        acc = filter_and_sum(dir, acc)
+    return acc
+
+
+def find_sized_directory(node: DirNode, total_size: int, size_free_target: int) -> int:
+    size_used = node.size()
+    actual_size_free = total_size - size_used
+    needed = size_free_target - actual_size_free
+
+    closest_to_target = size_used
+
+    stack: list[DirNode] = [node]
+    while 0 < len(stack):
+        current = stack.pop()
+        size = current.size()
+        if size > needed and size < closest_to_target:
+            closest_to_target = size
+        for dir in current.dirs:
+            stack.append(dir)
+    return closest_to_target
+
+
+def part01_answer() -> str:
+    loader = DataLoader(2022, "day07.txt")
+    data = loader.readlines_str(True)
+    lexer = Lexer(data)
+    tokens = lexer.lex()
+    parser = FileSystemParser(tokens[1:])
+    fs = parser.execute()
+    total = filter_and_sum(fs, 0)
+    return str(total)
+
+
+def part02_answer() -> str:
+    loader = DataLoader(2022, "day07.txt")
+    data = loader.readlines_str(True)
+    lexer = Lexer(data)
+    tokens = lexer.lex()
+    parser = FileSystemParser(tokens[1:])
+    fs = parser.execute()
+    size = find_sized_directory(fs, 70000000, 30000000)
+    return str(size)

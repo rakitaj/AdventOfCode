@@ -11,9 +11,12 @@ class DataLoader:
         path = Path(os.path.dirname(os.path.realpath(__file__)))
         return path
 
-    def readlines_str(self) -> list[str]:
+    def readlines_str(self, trim: bool = False) -> list[str]:
         with open(self.filepath, "r") as fp:
-            return fp.readlines()
+            lines = fp.readlines()
+            if trim:
+                lines = [line.strip() for line in lines]
+            return lines
 
     def read(self) -> str:
         with open(self.filepath, "r") as fp:

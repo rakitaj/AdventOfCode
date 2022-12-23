@@ -1,5 +1,5 @@
 import pytest
-from src.aoc2022.day07 import lex_instruction, Lexer, FileSystemParser
+from src.aoc2022.day07 import lex_instruction, Lexer, FileSystemParser, filter_and_sum
 
 tiny_data = """$ cd /
 $ ls
@@ -47,3 +47,12 @@ def test_parse_filesystem():
     assert fs.name == "/"
     assert len(fs.dirs) == 2
     assert len(fs.files) == 2 and fs.files["b.txt"] == 14848514 and fs.files["c.dat"] == 8504156
+
+
+def test_filter_and_sum():
+    lexer = Lexer(tiny_data)
+    tokens = lexer.lex()
+    parser = FileSystemParser(tokens[1:])
+    fs = parser.execute()
+    total = filter_and_sum(fs, 0)
+    assert total == 95437
