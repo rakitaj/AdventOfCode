@@ -5,20 +5,25 @@ T = TypeVar("T")
 
 
 class Grid(Generic[T]):
-    def __init__(self, x_size: int, y_size: int):
+    def __init__(self, x_size: int, y_size: int, contents: list[T]):
+        if len(contents) != x_size * y_size:
+            raise ValueError(f"Size {contents} is not equal to {x_size} * {y_size}")
         self.x_size = x_size
         self.y_size = y_size
-        self.g: list[list[T]] = list()
+        self.g = contents
 
     def get(self, x: int, y: int) -> T:
-        return self.g[y][x]
+        index = (y * self.x_size) + x
+        return self.g[index]
 
     @staticmethod
     def from_lines(lines: list[str], convert_func: Callable[[str], T]) -> Grid[T]:
-        x_size = len(lines[0])
-        y_size = len(lines)
-        grid: Grid[T] = Grid(x_size=x_size, y_size=y_size)
+        contents: list[T] = list()
+        x_size = 0
         for horizontal_line in lines:
-            converted_y_line = [convert_func(x_item) for x_item in horizontal_line.split()]
-            grid.g.append(converted_y_line)
+            converted_horizontal_line = [convert_func(x_item) for x_item in horizontal_line.split()]
+            x_size = len(converted_horizontal_line)
+            contents.extend(converted_horizontal_line)
+        y_size = len(lines)
+        grid: Grid[T] = Grid(x_size=x_size, y_size=y_size, contents=contents)
         return grid
