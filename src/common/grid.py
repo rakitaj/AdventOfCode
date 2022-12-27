@@ -16,14 +16,27 @@ class Grid(Generic[T]):
         index = (y * self.x_size) + x
         return self.g[index]
 
+    def try_get(self, x: int, y: int) -> bool:
+        """Check if the (x, y) coordinate is within the bounds of the grid."""
+        x_in_bounds = (0 <= x) and (x < self.x_size)
+        y_in_bounds = (0 <= y) and (y <= self.y_size)
+        return x_in_bounds and y_in_bounds
+
     @staticmethod
-    def from_lines(lines: list[str], convert_func: Callable[[str], T]) -> Grid[T]:
+    def from_lines(lines: list[str], convert_func: Callable[[str], T], split: int = True) -> Grid[T]:
         contents: list[T] = list()
         x_size = 0
         for horizontal_line in lines:
-            converted_horizontal_line = [convert_func(x_item) for x_item in horizontal_line.split()]
+            if split:
+                converted_horizontal_line = [convert_func(x_item) for x_item in horizontal_line.split()]
+            else:
+                converted_horizontal_line = [convert_func(x_item) for x_item in horizontal_line]
             x_size = len(converted_horizontal_line)
             contents.extend(converted_horizontal_line)
         y_size = len(lines)
         grid: Grid[T] = Grid(x_size=x_size, y_size=y_size, contents=contents)
         return grid
+
+    @staticmethod
+    def from_lines_to_int_grid(lines: list[str], split: int) -> Grid[int]:
+        return Grid.from_lines(lines, lambda x: int(x), False)
