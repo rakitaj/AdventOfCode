@@ -1,7 +1,7 @@
 {
     "python.formatting.provider": "black",
     "editor.formatOnSave": true,
-    "python.analysis.typeCheckingMode": "strict",
+    "python.analysis.typeCheckingMode": "basic",
     "python.linting.mypyEnabled": true,
     "files.exclude": {
         "**/.git": true,

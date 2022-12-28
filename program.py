@@ -64,3 +64,7 @@ print(answer)
 print("Advent of Code 2022: 8-1")
 answer = src.aoc2022.day08.part01_answer()
 print(answer)
+
+print("Advent of Code 2022: 8-2")
+answer = src.aoc2022.day08.part02_answer()
+print(answer)

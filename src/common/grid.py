@@ -19,7 +19,7 @@ class Grid(Generic[T]):
     def try_get(self, x: int, y: int) -> bool:
         """Check if the (x, y) coordinate is within the bounds of the grid."""
         x_in_bounds = (0 <= x) and (x < self.x_size)
-        y_in_bounds = (0 <= y) and (y <= self.y_size)
+        y_in_bounds = (0 <= y) and (y < self.y_size)
         return x_in_bounds and y_in_bounds
 
     @staticmethod
@@ -38,5 +38,19 @@ class Grid(Generic[T]):
         return grid
 
     @staticmethod
-    def from_lines_to_int_grid(lines: list[str], split: int) -> Grid[int]:
-        return Grid.from_lines(lines, lambda x: int(x), False)
+    def from_lines_to_int_grid(lines: list[str], split: bool) -> Grid[int]:
+        return Grid.from_lines(lines, lambda x: int(x), split)
+
+
+class Distances:
+    def __init__(self, up: int, down: int, left: int, right: int):
+        self.up = up
+        self.down = down
+        self.left = left
+        self.right = right
+
+    def reset(self) -> None:
+        self.up = 0
+        self.down = 0
+        self.left = 0
+        self.right = 0

@@ -1,5 +1,5 @@
 from src.common.dataload import DataLoader
-from src.common.grid import Grid
+from src.common.grid import Grid, Distances
 
 
 def visible_trees(grid: Grid[int]) -> set[tuple[int, int]]:
@@ -54,34 +54,28 @@ class FloodFillTrees:
     def __init__(self, grid: Grid[int]):
         self.grid = grid
         self.max_score = 0
-        self.distances = [0, 0, 0, 0]
+        self.distances = Distances(0, 0, 0, 0)
 
     def find_max(self) -> None:
         for y in range(self.grid.y_size):
             for x in range(self.grid.x_size):
-                self._find_max(x, y)
-                score = self.distances[0] * self.distances[1] * self.distances[2] * self.distances[3]
+                self._find_max(x, y, (-1, 0), "left")
+                self._find_max(x, y, (1, 0), "right")
+                self._find_max(x, y, (0, -1), "up")
+                self._find_max(x, y, (0, 1), "down")
+                score = self.distances.up * self.distances.down * self.distances.left * self.distances.right
                 self.max_score = max(score, self.max_score)
-                self.distances = [0, 0, 0, 0]
+                self.distances.reset()
 
-    def _find_max(self, x: int, y: int) -> None:
+    def _find_max(self, x: int, y: int, delta: tuple[int, int], direction: str) -> None:
         val = self.grid.get(x, y)
-        orig = (x, y)
-        while self.grid.try_get(x - 1, y) is True and self.grid.get(x - 1, y) < val:
-            self.distances[0] += 1
-            x -= 1
-        x, y = orig
-        while self.grid.try_get(x + 1, y) is True and self.grid.get(x + 1, y) < val:
-            self.distances[1] += 1
-            x += 1
-        x, y = orig
-        while self.grid.try_get(x, y + 1) is True and self.grid.get(x, y + 1) < val:
-            self.distances[2] += 1
-            y += 1
-        x, y = orig
-        while self.grid.try_get(x, y - 1) is True and self.grid.get(x, y - 1) < val:
-            self.distances[3] -= 1
-            y -= 1
+        x, y = x + delta[0], y + delta[1]
+        while self.grid.try_get(x, y) is True:
+            temp = getattr(self.distances, direction)
+            setattr(self.distances, direction, temp + 1)
+            if val <= self.grid.get(x, y):
+                break
+            x, y = x + delta[0], y + delta[1]
 
 
 def part01_answer() -> str:
@@ -90,3 +84,12 @@ def part01_answer() -> str:
     grid = Grid.from_lines_to_int_grid(data, False)
     actual = visible_trees(grid)
     return str(len(actual))
+
+
+def part02_answer() -> str:
+    loader = DataLoader(2022, "day08.txt")
+    data = loader.readlines_str(trim=True)
+    grid = Grid.from_lines_to_int_grid(data, False)
+    flood_fill_visible_trees = FloodFillTrees(grid)
+    flood_fill_visible_trees.find_max()
+    return str(flood_fill_visible_trees.max_score)
