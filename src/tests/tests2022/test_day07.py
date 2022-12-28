@@ -34,7 +34,7 @@ $ ls
         ("14848514 b.txt", ("contents", "b.txt", "14848514", 1)),
     ],
 )
-def test_lex_instruction(instruction: str, expected: tuple[str, str, str] | None):
+def test_lex_instruction(instruction: str, expected: tuple[str, str, str, int] | None):
     actual = lex_instruction(instruction, 1)
     assert actual == expected
 

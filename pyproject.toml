@@ -1,2 +1,14 @@
 [tool.black]
 line-length = 110
+
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = [
+  "src.common.*",
+  "src.aoc2022.*"
+]
+disallow_untyped_defs = true
