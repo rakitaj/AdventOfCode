@@ -4,6 +4,17 @@ from typing import TypeVar, Generic, Callable
 T = TypeVar("T")
 
 
+class Point:
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
+
+    def __eq__(self, __o: object) -> bool:
+        if isinstance(__o, type(self)):
+            return self.x == __o.x and self.y == __o.y
+        return False
+
+
 class Grid(Generic[T]):
     def __init__(self, x_size: int, y_size: int, contents: list[T]):
         if len(contents) != x_size * y_size:
