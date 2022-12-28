@@ -50,20 +50,38 @@ def others_lower_vert(grid: Grid[int], x: int, y: int) -> bool:
     return up_lower or down_lower
 
 
-# def flood_fill_trees(grid: Grid[int]) -> int:
-#     max_score = 0
-#     for y in range(grid.y_size):
-#         for x in range(grid.x_size):
-#             score = flood_fill(grid, x, y, 0)
-#             max_score = max(score, max_score)
-#     return max_score
-
-# def flood_fill(grid: Grid[int], x: int, y: int) -> int:
-
-
 class FloodFillTrees:
     def __init__(self, grid: Grid[int]):
         self.grid = grid
+        self.max_score = 0
+        self.distances = [0, 0, 0, 0]
+
+    def find_max(self) -> None:
+        for y in range(self.grid.y_size):
+            for x in range(self.grid.x_size):
+                self._find_max(x, y)
+                score = self.distances[0] * self.distances[1] * self.distances[2] * self.distances[3]
+                self.max_score = max(score, self.max_score)
+                self.distances = [0, 0, 0, 0]
+
+    def _find_max(self, x: int, y: int) -> None:
+        val = self.grid.get(x, y)
+        orig = (x, y)
+        while self.grid.try_get(x - 1, y) is True and self.grid.get(x - 1, y) < val:
+            self.distances[0] += 1
+            x -= 1
+        x, y = orig
+        while self.grid.try_get(x + 1, y) is True and self.grid.get(x + 1, y) < val:
+            self.distances[1] += 1
+            x += 1
+        x, y = orig
+        while self.grid.try_get(x, y + 1) is True and self.grid.get(x, y + 1) < val:
+            self.distances[2] += 1
+            y += 1
+        x, y = orig
+        while self.grid.try_get(x, y - 1) is True and self.grid.get(x, y - 1) < val:
+            self.distances[3] -= 1
+            y -= 1
 
 
 def part01_answer() -> str:

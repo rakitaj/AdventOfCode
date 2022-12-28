@@ -1,5 +1,5 @@
 from src.common.grid import Grid
-from src.aoc2022.day08 import visible_trees
+from src.aoc2022.day08 import visible_trees, FloodFillTrees
 
 tiny_data = """30373
 25512
@@ -36,3 +36,10 @@ def test_visible_trees():
         (2, 3),
     }
     assert visible_set == actual
+
+
+def test_max_viewing_distance():
+    grid = Grid.from_lines_to_int_grid(tiny_data, False)
+    viewing_distance_finder = FloodFillTrees(grid)
+    viewing_distance_finder.find_max()
+    assert viewing_distance_finder.max_score == 8
