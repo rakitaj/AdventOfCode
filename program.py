@@ -6,6 +6,7 @@ import src.aoc2022.day05
 import src.aoc2022.day06
 import src.aoc2022.day07
 import src.aoc2022.day08
+import src.aoc2022.day09
 
 print("Advent of Code 2022: 1-1")
 print(src.aoc2022.day01.part01_answer())
@@ -67,4 +68,8 @@ print(answer)
 
 print("Advent of Code 2022: 8-2")
 answer = src.aoc2022.day08.part02_answer()
+print(answer)
+
+print("Advent of Code 2022: 9-1")
+answer = src.aoc2022.day09.part01_answer()
 print(answer)

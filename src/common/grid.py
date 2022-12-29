@@ -14,6 +14,12 @@ class Point:
             return self.x == __o.x and self.y == __o.y
         return False
 
+    def __repr__(self) -> str:
+        return f"Point {{x:{self.x}, y:{self.y}}}"
+
+    def to_tuple(self) -> tuple[int, int]:
+        return (self.x, self.y)
+
 
 class Grid(Generic[T]):
     def __init__(self, x_size: int, y_size: int, contents: list[T]):
