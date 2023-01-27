@@ -1,4 +1,5 @@
-from src.aoc2022.day10 import parse_data, Noop, Addx, CPUEmulator
+import pytest
+from src.aoc2022.day10 import parse_data, NoOp, AddX, CPUEmulator
 
 data = """noop
 addx 3
@@ -149,21 +150,63 @@ addx -6
 addx -11
 noop
 noop
-noop"""
+noop""".splitlines()
 
 
 def test_tiny_data():
     instructions = parse_data(data)
     assert len(instructions) == 3
-    assert type(instructions[0]) is Noop
-    assert type(instructions[1]) is Addx and instructions[1].value == 3
-    assert type(instructions[2]) is Addx and instructions[2].value == -5
+    assert type(instructions[0]) is NoOp
+    assert type(instructions[1]) is AddX and instructions[1].value == 3
+    assert type(instructions[2]) is AddX and instructions[2].value == -5
 
 
 def test_tiny_data_5_ticks():
     instructions = parse_data(data)
-    cpu = CPUEmulator()
-    cpu.instructions = instructions
-    for _ in range(5):
-        cpu.tick()
+    cpu = CPUEmulator(instructions)
+    assert len(cpu.instructions) == 3
+    cpu.tick()
+    assert cpu.registers["X"] == 1
+    assert len(cpu.instructions) == 2
+    cpu.tick()
+    assert cpu.registers["X"] == 1
+    cpu.tick()
+    assert cpu.registers["X"] == 4
+    assert len(cpu.instructions) == 1
+    cpu.tick()
+    assert len(cpu.instructions) == 1
+    cpu.tick()
     assert cpu.registers["X"] == -1
+    assert len(cpu.instructions) == 0
+
+
+@pytest.mark.parametrize(
+    "cycle_num, expected", [(20, 420), (60, 1140), (100, 1800), (140, 2940), (180, 2880), (220, 3960)]
+)
+def test_big_data_220_ticks(cycle_num: int, expected: int):
+    instructions = parse_data(big_data)
+    cpu = CPUEmulator(instructions)
+    _ = cpu.tick_many(cycle_num)
+    assert cpu.registers["X"] * cycle_num == expected
+
+
+def test_big_data_220_ticks_total():
+    instructions = parse_data(big_data)
+    cpu = CPUEmulator(instructions)
+    actual = cpu.tick_many(220)
+    assert actual == 13140
+
+
+# def test_part_2_draw_letters():
+#     crt: list[str] = ["", "", "", "", "", ""]
+#     instructions = parse_data(big_data)
+#     cpu = CPUEmulator(instructions)
+#     for i in range(40):
+#         cpu.tick()
+#         rx = cpu.registers["X"]
+#         line_num = i // 40
+#         if i in {rx - 1, rx, rx + 1}:
+#             crt[line_num] += "#"
+#         else:
+#             crt[line_num] += "."
+#     assert crt[0] == "##..##..##..##..##..##..##..##..##..##.."

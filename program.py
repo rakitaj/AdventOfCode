@@ -78,3 +78,7 @@ print(answer)
 print("Advent of Code 2022: 10-1")
 answer = src.aoc2022.day10.part01_answer()
 print(answer)
+
+print("Advent of Code 2022: 10-2")
+crt_lines = src.aoc2022.day10.part02_answer()
+print("\n".join(crt_lines))

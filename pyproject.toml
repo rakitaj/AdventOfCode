@@ -5,6 +5,7 @@ line-length = 110
 warn_return_any = true
 warn_unused_configs = true
 strict_equality = true
+check_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = [
@@ -12,3 +13,7 @@ module = [
   "src.aoc2022.*"
 ]
 disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "parse"
+ignore_missing_imports = true

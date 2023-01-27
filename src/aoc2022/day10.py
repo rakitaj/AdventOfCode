@@ -1,52 +1,73 @@
+from __future__ import annotations
 from src.common.dataload import DataLoader
 
 
 class Instruction:
-    def __init__(self) -> None:
+    def __init__(self, name: str, value: int):
+        self.name = name
+        self.value = value
         self.cycles = 0
 
-    def run(self, registers: dict[str, int]) -> dict[str, int]:
-        self.cycles -= 1
-        return registers
+    def visit(self, cpu: CPUEmulator) -> None:
+        pass
 
     def done(self) -> bool:
-        return self.cycles <= 0
+        return True
+
+    def __repr__(self) -> str:
+        return f"{type(self)} cycles:{self.cycles}"
 
 
-class Noop(Instruction):
+class NoOp(Instruction):
     def __init__(self) -> None:
-        self.cycles = 1
+        super().__init__("noop", 0)
 
-    def run(self, registers: dict[str, int]) -> dict[str, int]:
-        Instruction.run(self, registers)
-        return registers
+    def visit(self, cpu: CPUEmulator) -> None:
+        self.cycles += 1
+
+    def done(self) -> bool:
+        return self.cycles == 1
+
+    def __repr__(self) -> str:
+        base_repr = super().__repr__()
+        return f"{base_repr} - NoOp"
 
 
-class Addx(Instruction):
-    def __init__(self, value: int) -> None:
-        self.cycles = 2
-        self.value = value
+class AddX(Instruction):
+    def __init__(self, value: int):
+        super().__init__("addx", value)
 
-    def run(self, registers: dict[str, int]) -> dict[str, int]:
-        Instruction.run(self, registers)
-        self.cycles -= 1
-        if self.cycles == 0:
-            registers["X"] += self.value
-        return registers
+    def visit(self, cpu: CPUEmulator) -> None:
+        self.cycles += 1
+        if self.cycles == 2:
+            cpu.registers["X"] += self.value
+
+    def done(self) -> bool:
+        return self.cycles == 2
+
+    def __repr__(self) -> str:
+        base_repr = super().__repr__()
+        return f"{base_repr} - AddX {self.value}"
 
 
 class CPUEmulator:
-    def __init__(self) -> None:
-        self.clock = 0
+    def __init__(self, instructions: list[Instruction]) -> None:
         self.registers = {"X": 1}
-        self.instructions: list[Instruction] = []
+        self.instructions = instructions
 
     def tick(self) -> None:
-        self.clock += 1
         if 0 < len(self.instructions):
-            self.registers = self.instructions[0].run(self.registers)
+            self.instructions[0].visit(self)
             if self.instructions[0].done():
                 self.instructions.pop(0)
+
+    def tick_many(self, num: int) -> int:
+        total = 0
+        for i in range(1, num + 1):
+            if (i + 20) % 40 == 0:
+                total += self.registers["X"] * i
+            self.tick()
+        return total
 
 
 def parse_data(lines: list[str]) -> list[Instruction]:
@@ -54,23 +75,34 @@ def parse_data(lines: list[str]) -> list[Instruction]:
     for line in lines:
         parts = line.split()
         if len(parts) == 1:
-            result.append(Noop())
+            result.append(NoOp())
         else:
             op, num = parts
-            result.append(Addx(int(num)))
+            result.append(AddX(int(num)))
     return result
 
 
 def part01_answer() -> str:
-    sum_signal_strength = 0
     loader = DataLoader(2022, "day10.txt")
     data = loader.readlines_str()
     instructions = parse_data(data)
-    cpu = CPUEmulator()
-    cpu.instructions = instructions
-    for i in range(1, 221):
+    cpu = CPUEmulator(instructions)
+    total = cpu.tick_many(220)
+    return str(total)
+
+
+def part02_answer() -> list[str]:
+    crt: list[str] = ["", "", "", "", "", ""]
+    loader = DataLoader(2022, "day10.txt")
+    data = loader.readlines_str()
+    instructions = parse_data(data)
+    cpu = CPUEmulator(instructions)
+    for i in range(1, 240):
+        rx = cpu.registers["X"]
+        line_num = i // 40
+        if i in {rx - 1, rx, rx + 1}:
+            crt[line_num] += "#"
+        else:
+            crt[line_num] += "."
         cpu.tick()
-        if (i + 20) % 40 == 0:
-            signal_strength = i * cpu.registers["X"]
-            sum_signal_strength += signal_strength
-    return str(sum_signal_strength)
+    return crt
