@@ -82,3 +82,4 @@ print(answer)
 print("Advent of Code 2022: 10-2")
 crt_lines = src.aoc2022.day10.part02_answer()
 print("\n".join(crt_lines))
+# I see "FPGPHFGH" but a little offset :/

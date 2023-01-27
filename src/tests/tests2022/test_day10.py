@@ -197,16 +197,17 @@ def test_big_data_220_ticks_total():
     assert actual == 13140
 
 
-# def test_part_2_draw_letters():
-#     crt: list[str] = ["", "", "", "", "", ""]
-#     instructions = parse_data(big_data)
-#     cpu = CPUEmulator(instructions)
-#     for i in range(40):
-#         cpu.tick()
-#         rx = cpu.registers["X"]
-#         line_num = i // 40
-#         if i in {rx - 1, rx, rx + 1}:
-#             crt[line_num] += "#"
-#         else:
-#             crt[line_num] += "."
-#     assert crt[0] == "##..##..##..##..##..##..##..##..##..##.."
+def test_part_2_draw_letters():
+    crt: list[str] = ["", "", "", "", "", ""]
+    instructions = parse_data(big_data)
+    cpu = CPUEmulator(instructions)
+    for i in range(1, 41):
+        cpu.tick()
+        rx = cpu.registers["X"]
+        line_num = abs(i - 1) // 40
+        if i % 40 in {rx - 1, rx, rx + 1}:
+            crt[line_num] += "#"
+        else:
+            crt[line_num] += "."
+    expected = "##..##..##..##..##..##..##..##..##..##.."
+    assert crt[0] == expected

@@ -97,12 +97,12 @@ def part02_answer() -> list[str]:
     data = loader.readlines_str()
     instructions = parse_data(data)
     cpu = CPUEmulator(instructions)
-    for i in range(1, 240):
+    for i in range(1, 241):
+        cpu.tick()
         rx = cpu.registers["X"]
-        line_num = i // 40
-        if i in {rx - 1, rx, rx + 1}:
+        line_num = abs(i - 1) // 40
+        if i % 40 in {rx - 1, rx, rx + 1}:
             crt[line_num] += "#"
         else:
             crt[line_num] += "."
-        cpu.tick()
     return crt
