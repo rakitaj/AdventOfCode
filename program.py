@@ -8,6 +8,7 @@ import src.aoc2022.day07
 import src.aoc2022.day08
 import src.aoc2022.day09
 import src.aoc2022.day10
+import src.aoc2022.day11
 
 print("Advent of Code 2022: 1-1")
 print(src.aoc2022.day01.part01_answer())
@@ -83,3 +84,7 @@ print("Advent of Code 2022: 10-2")
 crt_lines = src.aoc2022.day10.part02_answer()
 print("\n".join(crt_lines))
 # I see "FPGPHFGH" but a little offset :/
+
+print("Advent of Code 2022: 11-1")
+answer = src.aoc2022.day11.part01_answer()
+print(answer)

@@ -1,6 +1,6 @@
 import re
-import parse
 from typing import Callable
+from src.common.dataload import DataLoader
 
 
 class Monkey:
@@ -19,6 +19,7 @@ class Monkey:
         self.test = test
         self.true_dest = true_dest
         self.false_dest = false_dest
+        self.count = 0
 
 
 def parse_starting_items(line: str) -> list[int]:
@@ -80,3 +81,29 @@ def parse_data(data: list[str]) -> list[Monkey]:
         monkey = parse_to_monkey(data[i : i + 6])
         monkeys.append(monkey)
     return monkeys
+
+
+def tick(monkeys: list[Monkey]) -> list[Monkey]:
+    for i in range(len(monkeys)):
+        while 0 < len(monkeys[i].items):
+            item = monkeys[i].items.pop(0)
+            monkeys[i].count += 1
+            item = monkeys[i].op(item)
+            item = item // 3
+            test_result = monkeys[i].test(item)
+
+            if test_result:
+                monkeys[monkeys[i].true_dest].items.append(item)
+            else:
+                monkeys[monkeys[i].false_dest].items.append(item)
+    return monkeys
+
+
+def part01_answer() -> str:
+    loader = DataLoader(2022, "day11.txt")
+    data = loader.readlines_str()
+    monkeys = parse_data(data)
+    for _ in range(20):
+        monkeys = tick(monkeys)
+    monkeys.sort(key=lambda m: m.count)
+    return str(monkeys[-1].count * monkeys[-2].count)
