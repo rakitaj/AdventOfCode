@@ -50,21 +50,33 @@ def parse_op(line: str) -> Callable[[int], int]:
     raise ValueError("Can't parse the operation line")
 
 
-# def parse_test(line: str) -> Callable[[int], bool]:
-#     m = re.search(r"\d+", line)
-#     num = int(m.group(0))
-#     return lambda x: x % num == 0
-
-# def parse_num(line) -> int:
+def parse_num(line: str) -> int:
+    num_pattern = re.compile(r"(\d+)")
+    m = num_pattern.search(line)
+    if m is None:
+        raise ValueError(m)
+    num = int(m.group(0))
+    return num
 
 
 def parse_to_monkey(data: list[str]) -> Monkey:
-    parsed_id = parse.parse("Monkey {:d}", data[0])
+    parsed_id = parse_num(data[0])
     parsed_starting_items = parse_starting_items(data[1])
     parsed_op = parse_op(data[2])
-    parse_num_pattern = re.compile(r"(\d+)")
-    test_match = parse_num_pattern.search(data[3])
-    parsed_test = lambda x: x % int(test_match.group(0))
-    # parsed_test = parse_test(data[3])
-    monkey = Monkey(parsed_id, parsed_starting_items, parsed_op, parsed_test)
+
+    test_num = parse_num(data[3])
+    parsed_test = lambda x: x % test_num == 0
+
+    left_dest_num = parse_num(data[4])
+    right_dest_num = parse_num(data[5])
+
+    monkey = Monkey(parsed_id, parsed_starting_items, parsed_op, parsed_test, left_dest_num, right_dest_num)
     return monkey
+
+
+def parse_data(data: list[str]) -> list[Monkey]:
+    monkeys: list[Monkey] = list()
+    for i in range(0, len(data), 7):
+        monkey = parse_to_monkey(data[i : i + 6])
+        monkeys.append(monkey)
+    return monkeys
