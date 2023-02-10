@@ -88,3 +88,9 @@ print("\n".join(crt_lines))
 print("Advent of Code 2022: 11-1")
 answer = src.aoc2022.day11.part01_answer()
 print(answer)
+
+
+print("Advent of Code 2022: 11-2")
+answer = src.aoc2022.day11.part02_answer()
+print(answer)
+# Too high - 27220215198

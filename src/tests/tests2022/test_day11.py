@@ -1,4 +1,4 @@
-from src.aoc2022.day11 import parse_to_monkey, Monkey, parse_data, tick
+from src.aoc2022.day11 import parse_to_monkey, Monkey, parse_data, tick, tick2
 from src.common.dataload import DataLoader
 
 one_monkey = """  Monkey 0:
@@ -15,7 +15,7 @@ def test_parse_monkey_text():
     assert monkey.id_num == 0
     assert monkey.items == [79, 98]
     assert monkey.op(2) == 38
-    assert monkey.test(23) is True
+    assert monkey.divisor == 23
     assert monkey.true_dest == 2 and monkey.false_dest == 3
 
 
@@ -53,3 +53,17 @@ def test_small_data_twenty_rounds():
     assert monkeys[2].items == []
     assert monkeys[3].items == []
     assert monkeys[0].count == 101 and monkeys[3].count == 105
+
+
+def test_small_data_tick2():
+    loader = DataLoader(2022, "day11-small.txt")
+    small_data = loader.readlines_str()
+    monkeys = parse_data(small_data)
+    for _ in range(20):
+        monkeys = tick2(monkeys)
+    assert (
+        monkeys[0].count == 99
+        and monkeys[1].count == 97
+        and monkeys[2].count == 8
+        and monkeys[3].count == 103
+    )

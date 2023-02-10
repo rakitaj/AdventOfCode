@@ -9,14 +9,14 @@ class Monkey:
         id_num: int,
         starting_items: list[int],
         op: Callable[[int], int],
-        test: Callable[[int], bool],
+        divisor: int,
         true_dest: int,
         false_dest: int,
     ):
         self.id_num = id_num
         self.items = starting_items
         self.op = op
-        self.test = test
+        self.divisor = divisor
         self.true_dest = true_dest
         self.false_dest = false_dest
         self.count = 0
@@ -66,12 +66,12 @@ def parse_to_monkey(data: list[str]) -> Monkey:
     parsed_op = parse_op(data[2])
 
     test_num = parse_num(data[3])
-    parsed_test = lambda x: x % test_num == 0
+    # parsed_test = lambda x: x % test_num == 0
 
     left_dest_num = parse_num(data[4])
     right_dest_num = parse_num(data[5])
 
-    monkey = Monkey(parsed_id, parsed_starting_items, parsed_op, parsed_test, left_dest_num, right_dest_num)
+    monkey = Monkey(parsed_id, parsed_starting_items, parsed_op, test_num, left_dest_num, right_dest_num)
     return monkey
 
 
@@ -90,9 +90,29 @@ def tick(monkeys: list[Monkey]) -> list[Monkey]:
             monkeys[i].count += 1
             item = monkeys[i].op(item)
             item = item // 3
-            test_result = monkeys[i].test(item)
+            # test_result = monkeys[i].test(item)
 
-            if test_result:
+            if item % monkeys[i].divisor == 0:
+                monkeys[monkeys[i].true_dest].items.append(item)
+            else:
+                monkeys[monkeys[i].false_dest].items.append(item)
+    return monkeys
+
+
+def tick2(monkeys: list[Monkey]) -> list[Monkey]:
+    """My inspiration for the common modulo idea is
+    https://www.reddit.com/r/adventofcode/comments/10gsu50/2022_day_11_part_2_en_any_hint_for_the_solution/"""
+    common_modulo = 1
+    for m in monkeys:
+        common_modulo = common_modulo * m.divisor
+    for i in range(len(monkeys)):
+        while 0 < len(monkeys[i].items):
+            item = monkeys[i].items.pop(0)
+            monkeys[i].count += 1
+            item = monkeys[i].op(item)
+            item = item % common_modulo
+
+            if item % monkeys[i].divisor == 0:
                 monkeys[monkeys[i].true_dest].items.append(item)
             else:
                 monkeys[monkeys[i].false_dest].items.append(item)
@@ -105,5 +125,15 @@ def part01_answer() -> str:
     monkeys = parse_data(data)
     for _ in range(20):
         monkeys = tick(monkeys)
+    monkeys.sort(key=lambda m: m.count)
+    return str(monkeys[-1].count * monkeys[-2].count)
+
+
+def part02_answer() -> str:
+    loader = DataLoader(2022, "day11.txt")
+    data = loader.readlines_str()
+    monkeys = parse_data(data)
+    for _ in range(10000):
+        monkeys = tick2(monkeys)
     monkeys.sort(key=lambda m: m.count)
     return str(monkeys[-1].count * monkeys[-2].count)
