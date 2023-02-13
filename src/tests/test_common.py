@@ -43,3 +43,9 @@ def test_point_gt_lt_should_raise() -> None:
         Point(0, 0) < Point(5, 5)  # type: ignore
     with pytest.raises(TypeError):
         Point(0, 0) > Point(5, 5)  # type: ignore
+
+
+@pytest.mark.parametrize("target, expected", [(1, (0, 0)), (4, (0, 1)), (10, None)])
+def test_find(target: int, expected: tuple[int, int] | None) -> None:
+    grid = Grid.from_lines_to_int_grid(small_grid_input, True)
+    assert grid.find(target) == expected

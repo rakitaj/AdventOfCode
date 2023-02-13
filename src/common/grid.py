@@ -39,8 +39,34 @@ class Grid(Generic[T]):
         y_in_bounds = (0 <= y) and (y < self.y_size)
         return x_in_bounds and y_in_bounds
 
+    def find(self, target: T) -> tuple[int, int] | None:
+        """Find the first occurance of the target in the grid."""
+        for i, e in enumerate(self.g):
+            if e == target:
+                y = i // self.x_size
+                x = i % self.x_size
+                return (x, y)
+        return None
+
+    def moves(self, x: int, y: int) -> list[tuple[int, int]]:
+        valid_moves: list[tuple[int, int]] = list()
+        potential_moves = [
+            (x - 1, y + 1),
+            (x - 1, y),
+            (x - 1, y - 1),
+            (x, y + 1),
+            (x, y - 1),
+            (x + 1, y + 1),
+            (x + 1, y),
+            (x + 1, y - 1),
+        ]
+        for move in potential_moves:
+            if self.try_get(move[0], move[1]) is True:
+                valid_moves.append(move)
+        return valid_moves
+
     @staticmethod
-    def from_lines(lines: list[str], convert_func: Callable[[str], T], split: int = True) -> Grid[T]:
+    def from_lines(lines: list[str], convert_func: Callable[[str], T], split: bool = True) -> Grid[T]:
         contents: list[T] = list()
         x_size = 0
         for horizontal_line in lines:
