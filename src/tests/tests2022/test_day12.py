@@ -1,5 +1,5 @@
 from src.common.grid import Grid, Point
-from src.aoc2022.day12 import convert
+
 
 small_data = """Sabqponm
 abcryxxl
@@ -10,5 +10,5 @@ abdefghi
 
 
 def test_parse_to_grid():
-    grid = Grid.from_lines(small_data)
+    grid = Grid.from_strings_no_spaces(small_data)
     assert grid.get(0, 0) == "S"

@@ -17,13 +17,6 @@ def find_end(grid: Grid[str]) -> Point:
         return Point(start[0], start[1])
 
 
-def convert(line: str) -> list[str]:
-    result: list[str] = list()
-    for char in line:
-        result.append(char)
-    return result
-
-
 def find_path(grid: Grid[str], start: Point, end: Point) -> list[Point]:
     acc: list[Point] = list()
     for move in grid.moves(start.x, start.y):
