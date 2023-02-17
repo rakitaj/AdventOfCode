@@ -84,6 +84,16 @@ class Grid(Generic[T]):
     def from_lines_to_int_grid(lines: list[str], split: bool) -> Grid[int]:
         return Grid.from_lines(lines, lambda x: int(x), split)
 
+    @staticmethod
+    def from_strings_no_spaces(lines: list[str]) -> Grid[str]:
+        x_size = len(lines[0])
+        y_size = len(lines)
+        result: list[str] = list()
+        for line in lines:
+            result.extend(line)
+        grid = Grid(x_size, y_size, result)
+        return grid
+
 
 class Distances:
     def __init__(self, up: int, down: int, left: int, right: int):

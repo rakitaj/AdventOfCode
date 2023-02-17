@@ -37,3 +37,4 @@ def _find_path(grid: Grid[str], current: Point, acc: list[Point]) -> None:
         if next_ord - current_ord == 0 or next_ord - current_ord == 1:
             next_p = Point(x, y)
             _find_path(grid, next_p, acc)
+    acc.pop()
