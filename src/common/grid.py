@@ -20,6 +20,9 @@ class Point:
     def to_tuple(self) -> tuple[int, int]:
         return (self.x, self.y)
 
+    def __hash__(self) -> int:
+        return hash((self.x, self.y))
+
 
 class Grid(Generic[T]):
     def __init__(self, x_size: int, y_size: int, contents: list[T]):

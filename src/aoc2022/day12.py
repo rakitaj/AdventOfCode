@@ -21,11 +21,11 @@ def find_path(grid: Grid[str], start: Point, end: Point) -> list[Point]:
     acc: list[Point] = list()
     for move in grid.moves(start.x, start.y):
         p = Point(move[0], move[1])
-        _find_path(grid, p, acc)
+        _find_path(grid, p, acc, set())
     return acc
 
 
-def _find_path(grid: Grid[str], current: Point, acc: list[Point]) -> None:
+def _find_path(grid: Grid[str], current: Point, acc: list[Point], visited: set[Point]) -> None:
     acc.append(current)
     current_val = grid.get(current.x, current.y)
     if current_val == "E":
@@ -34,7 +34,8 @@ def _find_path(grid: Grid[str], current: Point, acc: list[Point]) -> None:
     for x, y in grid.moves(current.x, current.y):
         next_val = grid.get(x, y)
         next_ord = ord(next_val)
-        if next_ord - current_ord == 0 or next_ord - current_ord == 1:
-            next_p = Point(x, y)
-            _find_path(grid, next_p, acc)
+        next_p = Point(x, y)
+        if next_ord - current_ord == 0 or next_ord - current_ord == 1 and next_p not in visited:
+            visited.add(next_p)
+            _find_path(grid, next_p, acc, visited)
     acc.pop()

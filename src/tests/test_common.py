@@ -49,3 +49,24 @@ def test_point_gt_lt_should_raise() -> None:
 def test_find(target: int, expected: tuple[int, int] | None) -> None:
     grid = Grid.from_lines_to_int_grid(small_grid_input, True)
     assert grid.find(target) == expected
+
+
+@pytest.mark.parametrize(
+    "point1, point2, expected",
+    [(Point(0, 0), Point(0, 0), True), (Point(1, 2), Point(1, 2), True), (Point(7, 1), Point(6, 1), False)],
+)
+def test_hash_equality(point1: Point, point2: Point, expected: bool) -> None:
+    actual = hash(point1) == hash(point2)
+    assert actual is expected
+
+
+def test_hash_point_in_set_should_be_true():
+    s = {Point(0, 0), Point(-1, -5)}
+    result = Point(-1, -5) in s
+    assert result is True
+
+
+def test_hash_point_in_set_should_be_false():
+    s = {Point(0, 0), Point(-1, -5)}
+    result = Point(100, -5) in s
+    assert result is False
