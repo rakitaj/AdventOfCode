@@ -3,39 +3,44 @@ from typing import Any
 import ast
 
 
-# [[1],[2,3,4]]
-# [[1],4]
-
-# [9]
-# [[8,7,6]]
-
-# [[4,4],4,4]
-# [[4,4],4,4,4]
-
-
 class NestedList:
-    def __init__(self, parent: NestedList | None | None, data: list[int]):
+    def __init__(self, parent: NestedList | None, children: list[NestedList], data: list[int]):
         self.parent = parent
+        self.children = children
         self.data = data
 
 
-def parse_line_2(line: str) -> NestedList:
-    root = NestedList(None, list())
+def parse_to_nested_list(line: str) -> NestedList:
+    root = NestedList(None, list(), list())
     current = root
     i = 0
     while i < len(line):
         if line[i] == "[":
-            child_list = NestedList(current, list())
-            current = child_list
+            nl = NestedList(current, list(), list())
+            current.children.append(nl)
+            current = nl
         elif line[i] == "]" and current.parent is not None:
             current = current.parent
         else:
             number = ""
-            while line[i].
-        i += i
+            while line[i].isdigit():
+                number = number + line[i]
+                i += 1
+            current.data.append(int(number))
+        i += 1
     return root
 
 
 def parse_line(line: str) -> Any:
     x = ast.literal_eval(line)
     return x
+
+
+def compare_lines(n1: NestedList, n2: NestedList) -> bool:
+    while n1 is not None and n2 is not None:
+        for i, _ in enumerate(n1.data):
+            if len(n1.data) < len(n2.data):
+                return False
+            if n2.data[i] > n1.data[i]:
+                return False
+    return True

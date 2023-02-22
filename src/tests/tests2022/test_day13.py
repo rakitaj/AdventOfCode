@@ -1,5 +1,5 @@
 from typing import Any
-from src.aoc2022.day13 import parse_line
+from src.aoc2022.day13 import parse_line, parse_to_nested_list, NestedList
 import pytest
 
 small_data = """[1,1,3,1,1]
@@ -31,3 +31,10 @@ small_data = """[1,1,3,1,1]
 def test_parse_line(line: str, expected: Any):
     actual = parse_line(line)
     assert actual == expected
+
+
+def test_parse_to_nested_list():
+    line = "[1,1,3,1,1]"
+    expected = NestedList(None, list(), [1, 1, 3, 1, 1])
+    actual = parse_to_nested_list(line)
+    assert expected.data == actual.children[0].data
