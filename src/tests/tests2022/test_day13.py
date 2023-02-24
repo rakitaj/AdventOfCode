@@ -37,4 +37,4 @@ def test_parse_to_nested_list():
     line = "[1,1,3,1,1]"
     expected = NestedList(None, list(), [1, 1, 3, 1, 1])
     actual = parse_to_nested_list(line)
-    assert expected.data == actual.children[0].data
+    assert expected.data == actual.data

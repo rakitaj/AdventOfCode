@@ -28,7 +28,7 @@ def parse_to_nested_list(line: str) -> NestedList:
                 i += 1
             current.data.append(int(number))
         i += 1
-    return root
+    return current
 
 
 def parse_line(line: str) -> Any:
