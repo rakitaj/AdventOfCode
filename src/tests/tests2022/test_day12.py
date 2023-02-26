@@ -30,5 +30,38 @@ def test_pathfinding():
     start = find_start(grid)
     end = find_end(grid)
     path = find_path(grid, start, end)
-    # assert path == ["S", "a", "b", "c", "c"]
-    assert path == [Point(0, 0), Point(0, 1)]
+    assert len(path) - 1 == 31
+    # assert path == [
+    #     Point(0, 0),
+    #     Point(0, 1),
+    #     Point(1, 1),
+    #     Point(1, 2),
+    #     Point(2, 2),
+    #     Point(2, 3),
+    #     Point(2, 4),
+    #     Point(3, 4),
+    #     Point(4, 4),
+    #     Point(5, 4),
+    #     Point(6, 4),
+    #     Point(7, 4),
+    #     Point(7, 3),
+    #     Point(7, 2),
+    #     Point(7, 1),
+    #     Point(7, 0),
+    #     Point(6, 0),
+    #     Point(5, 0),
+    #     Point(4, 0),
+    #     Point(3, 0),
+    #     Point(3, 1),
+    #     Point(3, 2),
+    #     Point(3, 3),
+    #     Point(4, 3),
+    #     Point(5, 3),
+    #     Point(6, 3),
+    #     Point(6, 2),
+    #     Point(6, 1),
+    #     Point(5, 1),
+    #     Point(4, 1),
+    #     Point(4, 2),
+    #     Point(5, 2),
+    # ]

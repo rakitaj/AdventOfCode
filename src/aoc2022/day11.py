@@ -66,7 +66,6 @@ def parse_to_monkey(data: list[str]) -> Monkey:
     parsed_op = parse_op(data[2])
 
     test_num = parse_num(data[3])
-    # parsed_test = lambda x: x % test_num == 0
 
     left_dest_num = parse_num(data[4])
     right_dest_num = parse_num(data[5])
@@ -90,7 +89,6 @@ def tick(monkeys: list[Monkey]) -> list[Monkey]:
             monkeys[i].count += 1
             item = monkeys[i].op(item)
             item = item // 3
-            # test_result = monkeys[i].test(item)
 
             if item % monkeys[i].divisor == 0:
                 monkeys[monkeys[i].true_dest].items.append(item)

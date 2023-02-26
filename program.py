@@ -9,6 +9,7 @@ import src.aoc2022.day08
 import src.aoc2022.day09
 import src.aoc2022.day10
 import src.aoc2022.day11
+import src.aoc2022.day12
 
 print("Advent of Code 2022: 1-1")
 print(src.aoc2022.day01.part01_answer())
@@ -89,8 +90,10 @@ print("Advent of Code 2022: 11-1")
 answer = src.aoc2022.day11.part01_answer()
 print(answer)
 
-
 print("Advent of Code 2022: 11-2")
 answer = src.aoc2022.day11.part02_answer()
 print(answer)
-# Too high - 27220215198
+
+print("Advent of Code 2022: 12-1")
+answer = src.aoc2022.day12.part01_answer()
+print(answer)

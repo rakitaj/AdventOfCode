@@ -1,4 +1,5 @@
 from src.common.grid import Grid, Point
+from src.common.dataload import DataLoader
 
 
 def find_start(grid: Grid[str]) -> Point:
@@ -20,22 +21,32 @@ def find_end(grid: Grid[str]) -> Point:
 def find_path(grid: Grid[str], start: Point, end: Point) -> list[Point]:
     queue: list[Point] = [start]
     visited: set[Point] = set()
-    result: list[Point] = list()
+    edge_to: dict[Point, Point | None] = {start: None}
 
     while 0 < len(queue):
-        current = queue.pop(len(queue) - 1)
+        current = queue.pop(0)
         visited.add(current)
-        result.append(current)
         current_val = grid.get(current.x, current.y)
         current_ord = ord_override(current_val)
         if current_val == "E":
-            break
+            return path(edge_to, current)
         for x, y in grid.moves_cardinal(current.x, current.y):
             next_val = grid.get(x, y)
             next_ord = ord_override(next_val)
             next_p = Point(x, y)
-            if next_ord - current_ord in [0, 1] and next_p not in visited:
+            if next_ord - current_ord <= 1 and next_p not in visited:
                 queue.append(Point(x, y))
+                edge_to[next_p] = current
+    raise ValueError("No path found.")
+
+
+def path(edge_to: dict[Point, Point | None], end_point: Point) -> list[Point]:
+    current: Point | None = end_point
+    result: list[Point] = list()
+    while current is not None:
+        result.append(current)
+        current = edge_to[current]
+    result.reverse()
     return result
 
 
@@ -43,6 +54,16 @@ def ord_override(char: str) -> int:
     if char == "S":
         return 0
     elif char == "E":
-        return 123
+        return ord("z") - ord("a")
     else:
-        return ord(char) - 97
+        return ord(char) - ord("a")
+
+
+def part01_answer() -> str:
+    loader = DataLoader(2022, "day12.txt")
+    data = loader.readlines_str()
+    grid = Grid.from_strings_no_spaces(data)
+    start = find_start(grid)
+    end = find_end(grid)
+    path = find_path(grid, start, end)
+    return str(len(path) - 1)
