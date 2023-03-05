@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import TypeVar, Generic, Callable
+from typing import TypeVar, Generic, Callable, Generator
 
 T = TypeVar("T")
 
@@ -38,9 +38,10 @@ class Grid(Generic[T]):
 
     def try_get(self, x: int, y: int) -> bool:
         """Check if the (x, y) coordinate is within the bounds of the grid."""
-        x_in_bounds = (0 <= x) and (x < self.x_size)
-        y_in_bounds = (0 <= y) and (y < self.y_size)
-        return x_in_bounds and y_in_bounds
+        # x_in_bounds = (0 <= x) and (x < self.x_size)
+        # y_in_bounds = (0 <= y) and (y < self.y_size)
+        # return x_in_bounds and y_in_bounds
+        return ((0 <= x) and (x < self.x_size)) and ((0 <= y) and (y < self.y_size))
 
     def find(self, target: T) -> tuple[int, int] | None:
         """Find the first occurance of the target in the grid."""
@@ -77,25 +78,16 @@ class Grid(Generic[T]):
                 valid_moves.append(move)
         return valid_moves
 
-    def moves_cardinal(self, x: int, y: int) -> list[tuple[int, int]]:
-        return [
+    def moves_cardinal(self, x: int, y: int) -> Generator:
+        potential_moves = [
             (x - 1, y),
             (x, y + 1),
             (x, y - 1),
             (x + 1, y),
         ]
-
-        # valid_moves: list[tuple[int, int]] = list()
-        # potential_moves = [
-        #     (x - 1, y),
-        #     (x, y + 1),
-        #     (x, y - 1),
-        #     (x + 1, y),
-        # ]
-        # for move in potential_moves:
-        #     if self.try_get(move[0], move[1]) is True:
-        #         valid_moves.append(move)
-        # return valid_moves
+        for dx, dy in potential_moves:
+            if 0 <= dx < self.x_size and 0 <= dy < self.y_size:
+                yield (dx, dy)
 
     @staticmethod
     def from_lines(lines: list[str], convert_func: Callable[[str], T], split: bool = True) -> Grid[T]:

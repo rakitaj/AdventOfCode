@@ -1,10 +1,17 @@
+from typing import Generator
+from string import ascii_lowercase
 from src.common.grid import Grid, Point
-from src.common.characters import char_to_ord
 from src.common.dataload import DataLoader
 from heapq import heappush, heappop
 
 
-ord_override = char_to_ord(S=97, E=122)
+def height(s: str) -> int:
+    if s == "S":
+        return 0
+    elif s == "E":
+        return 25
+    else:
+        return ascii_lowercase.index(s)
 
 
 def find_start(grid: Grid[str]) -> Point:
@@ -36,12 +43,11 @@ def find_path(grid: Grid[str], start: Point) -> tuple[int, int, int] | None:
             continue
         visited.add((x, y))
         for nx, ny in grid.moves_cardinal(x, y):
-            if grid.try_get(nx, ny) is False:
-                continue
             next_val = grid.get(nx, ny)
-            if (nx, ny) not in visited and (ord_override[next_val] - ord_override[current_val] <= 1):
+            if (nx, ny) not in visited and height(next_val) - height(current_val) <= 1:
+                visited.add((nx, ny))
                 heappush(queue, (distance + 1, nx, ny))
-    return None
+    raise ValueError("No solution found.")
 
 
 def find_path_bfs(grid: Grid[str], start: Point) -> int:
@@ -57,7 +63,7 @@ def find_path_bfs(grid: Grid[str], start: Point) -> int:
             return depth
         for nx, ny in grid.moves_cardinal(x, y):
             next_val = grid.get(nx, ny)
-            if (nx, ny) not in visited and ord_override[next_val] - ord_override[current_val] <= 1:
+            if (nx, ny) not in visited and height(next_val) - height(current_val) <= 1:
                 queue.append((nx, ny))
                 depth_queue.append(depth + 1)
                 visited.add((nx, ny))
@@ -66,7 +72,7 @@ def find_path_bfs(grid: Grid[str], start: Point) -> int:
 
 def part01_answer() -> str:
     loader = DataLoader(2022, "day12.txt")
-    data = loader.readlines_str()
+    data = loader.readlines_str(trim_newlines=True)
     grid = Grid.from_strings_no_spaces(data)
     start = find_start(grid)
     result = find_path_bfs(grid, start)
