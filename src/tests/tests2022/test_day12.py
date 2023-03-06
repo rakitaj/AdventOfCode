@@ -29,5 +29,7 @@ def test_pathfinding():
     grid = Grid.from_strings_no_spaces(small_data)
     start = find_start(grid)
     end = find_end(grid)
-    distance, x, y = find_path(grid, start)
+    result = find_path(grid, start)
+    assert result is not None
+    distance, x, y = result
     assert distance == 31 and (x, y) == end.to_tuple()

@@ -51,6 +51,15 @@ class Grid(Generic[T]):
                 return (x, y)
         return None
 
+    def find_all(self, target: T) -> list[tuple[int, int]]:
+        result = list()
+        for i, e in enumerate(self.g):
+            if e == target:
+                y = i // self.x_size
+                x = i % self.x_size
+                result.append((x, y))
+        return result
+
     def moves(self, x: int, y: int) -> list[tuple[int, int]]:
         valid_moves: list[tuple[int, int]] = list()
         potential_moves = [

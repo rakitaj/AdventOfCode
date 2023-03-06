@@ -19,7 +19,7 @@ def find_end(grid: Grid[str]) -> Point:
         return Point(start[0], start[1])
 
 
-def find_path(grid: Grid[str], start: Point) -> tuple[int, int, int]:
+def find_path(grid: Grid[str], start: Point) -> tuple[int, int, int] | None:
     queue: list[tuple[int, int, int]] = [(0, start.x, start.y)]
     visited: set[tuple[int, int]] = set()
 
@@ -35,7 +35,7 @@ def find_path(grid: Grid[str], start: Point) -> tuple[int, int, int]:
             next_val = grid.get(nx, ny)
             if ord_override(next_val) - ord_override(current_val) <= 1:
                 heappush(queue, (distance + 1, nx, ny))
-    raise ValueError("No path found.")
+    return None
 
 
 def ord_override(char: str) -> int:
@@ -52,5 +52,18 @@ def part01_answer() -> str:
     data = loader.readlines_str()
     grid = Grid.from_strings_no_spaces(data)
     start = find_start(grid)
-    distance, x, y = find_path(grid, start)
-    return str((distance, x, y))
+    result = find_path(grid, start)
+    return str(result)
+
+
+def part02_answer() -> str:
+    loader = DataLoader(2022, "day12.txt")
+    data = loader.readlines_str()
+    grid = Grid.from_strings_no_spaces(data)
+    starts = grid.find_all("a")
+    distances: list[int] = list()
+    for start in starts:
+        path_result = find_path(grid, Point(start[0], start[1]))
+        if path_result is not None:
+            distances.append(path_result[0])
+    return str(min(distances))
