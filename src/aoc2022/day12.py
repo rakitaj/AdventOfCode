@@ -45,8 +45,8 @@ def find_path(grid: Grid[str], start: Point) -> tuple[int, int, int] | None:
         for nx, ny in grid.moves_cardinal(x, y):
             next_val = grid.get(nx, ny)
             if (nx, ny) not in visited and height(next_val) - height(current_val) <= 1:
-                visited.add((nx, ny))
                 heappush(queue, (distance + 1, nx, ny))
+                visited.add((nx, ny))
     raise ValueError("No solution found.")
 
 

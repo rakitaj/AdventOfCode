@@ -78,16 +78,18 @@ class Grid(Generic[T]):
                 valid_moves.append(move)
         return valid_moves
 
-    def moves_cardinal(self, x: int, y: int) -> Generator:
+    def moves_cardinal(self, x: int, y: int) -> list[tuple[int, int]]:
+        valid_moves: list[tuple[int, int]] = list()
         potential_moves = [
             (x - 1, y),
             (x, y + 1),
             (x, y - 1),
             (x + 1, y),
         ]
-        for dx, dy in potential_moves:
-            if 0 <= dx < self.x_size and 0 <= dy < self.y_size:
-                yield (dx, dy)
+        for move in potential_moves:
+            if self.try_get(move[0], move[1]) is True:
+                valid_moves.append(move)
+        return valid_moves
 
     @staticmethod
     def from_lines(lines: list[str], convert_func: Callable[[str], T], split: bool = True) -> Grid[T]:
