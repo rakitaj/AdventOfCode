@@ -1,6 +1,6 @@
 import pytest
 from src.common.grid import Grid, Point
-from src.aoc2022.day12 import find_start, find_end, find_path
+from src.aoc2022.day12 import find_start, find_end, find_path, find_path_bfs
 
 
 small_data = """Sabqponm
@@ -33,3 +33,10 @@ def test_pathfinding():
     assert result is not None
     distance, x, y = result
     assert distance == 31 and (x, y) == end.to_tuple()
+
+
+def test_pathfinding_bfs():
+    grid = Grid.from_strings_no_spaces(small_data)
+    start = find_start(grid)
+    distance = find_path_bfs(grid, start)
+    assert distance == 31

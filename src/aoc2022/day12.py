@@ -38,6 +38,26 @@ def find_path(grid: Grid[str], start: Point) -> tuple[int, int, int] | None:
     return None
 
 
+def find_path_bfs(grid: Grid[str], start: Point) -> int:
+    queue: list[tuple[int, int]] = [(start.x, start.y)]
+    visited: set[tuple[int, int]] = set()
+    depth_queue: list[int] = [0]
+
+    while 0 < len(queue):
+        depth = depth_queue.pop(0)
+        x, y = queue.pop(0)
+        current_val = grid.get(x, y)
+        if current_val == "E":
+            return depth
+        for nx, ny in grid.moves_cardinal(x, y):
+            next_val = grid.get(nx, ny)
+            if (nx, ny) not in visited and ord_override(next_val) - ord_override(current_val) <= 1:
+                queue.append((nx, ny))
+                depth_queue.append(depth + 1)
+                visited.add((nx, ny))
+    return -1
+
+
 def ord_override(char: str) -> int:
     if char == "S":
         return 0
@@ -52,7 +72,7 @@ def part01_answer() -> str:
     data = loader.readlines_str()
     grid = Grid.from_strings_no_spaces(data)
     start = find_start(grid)
-    result = find_path(grid, start)
+    result = find_path_bfs(grid, start)
     return str(result)
 
 
