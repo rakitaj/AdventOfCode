@@ -33,6 +33,7 @@ small_data = """[1,1,3,1,1]
         ("[[1], [2, 3, 4]]", "[[1], 4]", True),
         ("[9]", "[[8,7,6]]", False),
         ("[[[]]]", "[[]]", False),
+        ("[7,7,7,7]", "[7,7,7]", False),
     ],
 )
 def test_compare_lines(line1: str, line2: str, expected: bool):
