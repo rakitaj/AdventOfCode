@@ -1,5 +1,5 @@
 import pytest
-from src.common.extensions import single
+from src.common.extensions import single, flatten
 from src.common.grid import Grid, Point
 
 small_grid_input = """1 2 3
@@ -70,3 +70,12 @@ def test_hash_point_in_set_should_be_false():
     s = {Point(0, 0), Point(-1, -5)}
     result = Point(100, -5) in s
     assert result is False
+
+
+@pytest.mark.parametrize(
+    "nested_array, flattened_array",
+    [([1, [2, [3, [4, [5, 6, 7]]]], 8, 9], [1, 2, 3, 4, 5, 6, 7, 8, 9]), ([[[]]], [])],
+)
+def test_flatten_array(nested_array, flattened_array: list[int]):
+    actual = flatten(nested_array)
+    assert actual == flattened_array
