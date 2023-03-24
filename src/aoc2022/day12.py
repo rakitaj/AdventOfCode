@@ -44,10 +44,9 @@ def find_path(grid: Grid[str], start: Point) -> tuple[int, int, int] | None:
         visited.add((x, y))
         for nx, ny in grid.moves_cardinal(x, y):
             next_val = grid.get(nx, ny)
-            if (nx, ny) not in visited and height(next_val) - height(current_val) <= 1:
+            if height(next_val) - height(current_val) <= 1:
                 heappush(queue, (distance + 1, nx, ny))
-                visited.add((nx, ny))
-    raise ValueError("No solution found.")
+    return None
 
 
 def find_path_bfs(grid: Grid[str], start: Point) -> int:
@@ -75,13 +74,13 @@ def part01_answer() -> str:
     data = loader.readlines_str(trim_newlines=True)
     grid = Grid.from_strings_no_spaces(data)
     start = find_start(grid)
-    result = find_path_bfs(grid, start)
+    result = find_path(grid, start)
     return str(result)
 
 
 def part02_answer() -> str:
     loader = DataLoader(2022, "day12.txt")
-    data = loader.readlines_str()
+    data = loader.readlines_str(trim_newlines=True)
     grid = Grid.from_strings_no_spaces(data)
     starts = grid.find_all("a")
     distances: list[int] = list()

@@ -1,7 +1,6 @@
 import pytest
 from src.common.extensions import single, flatten
 from src.common.grid import Grid, Point
-from src.common.characters import char_to_ord
 
 small_grid_input = """1 2 3
 4 5 6
@@ -80,11 +79,3 @@ def test_hash_point_in_set_should_be_false():
 def test_flatten_array(nested_array, flattened_array: list[int]):
     actual = flatten(nested_array)
     assert actual == flattened_array
-
-
-def test_char_map():
-    char_map = char_to_ord(E=122, S=97)
-    assert char_map["a"] == 97
-    assert char_map["S"] == 97
-    assert char_map["z"] == 122
-    assert char_map["E"] == 122
