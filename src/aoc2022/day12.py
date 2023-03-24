@@ -1,6 +1,10 @@
 from src.common.grid import Grid, Point
+from src.common.characters import char_to_ord
 from src.common.dataload import DataLoader
 from heapq import heappush, heappop
+
+
+ord_override = char_to_ord(S=97, E=122)
 
 
 def find_start(grid: Grid[str]) -> Point:
@@ -32,8 +36,10 @@ def find_path(grid: Grid[str], start: Point) -> tuple[int, int, int] | None:
             continue
         visited.add((x, y))
         for nx, ny in grid.moves_cardinal(x, y):
+            if grid.try_get(nx, ny) is False:
+                continue
             next_val = grid.get(nx, ny)
-            if ord_override(next_val) - ord_override(current_val) <= 1:
+            if (nx, ny) not in visited and (ord_override[next_val] - ord_override[current_val] <= 1):
                 heappush(queue, (distance + 1, nx, ny))
     return None
 
@@ -51,20 +57,11 @@ def find_path_bfs(grid: Grid[str], start: Point) -> int:
             return depth
         for nx, ny in grid.moves_cardinal(x, y):
             next_val = grid.get(nx, ny)
-            if (nx, ny) not in visited and ord_override(next_val) - ord_override(current_val) <= 1:
+            if (nx, ny) not in visited and ord_override[next_val] - ord_override[current_val] <= 1:
                 queue.append((nx, ny))
                 depth_queue.append(depth + 1)
                 visited.add((nx, ny))
     return -1
-
-
-def ord_override(char: str) -> int:
-    if char == "S":
-        return 0
-    elif char == "E":
-        return 25
-    else:
-        return ord(char) - 97
 
 
 def part01_answer() -> str:
