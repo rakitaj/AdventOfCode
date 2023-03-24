@@ -80,7 +80,7 @@ class FloodFillTrees:
 
 def part01_answer() -> str:
     loader = DataLoader(2022, "day08.txt")
-    data = loader.readlines_str(trim=True)
+    data = loader.readlines_str(trim_newlines=True)
     grid = Grid.from_lines_to_int_grid(data, False)
     actual = visible_trees(grid)
     return str(len(actual))
@@ -88,7 +88,7 @@ def part01_answer() -> str:
 
 def part02_answer() -> str:
     loader = DataLoader(2022, "day08.txt")
-    data = loader.readlines_str(trim=True)
+    data = loader.readlines_str(trim_newlines=True)
     grid = Grid.from_lines_to_int_grid(data, False)
     flood_fill_visible_trees = FloodFillTrees(grid)
     flood_fill_visible_trees.find_max()
