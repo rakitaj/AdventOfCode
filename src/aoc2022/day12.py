@@ -1,6 +1,6 @@
 from src.common.grid import Grid, Point
 from src.common.dataload import DataLoader
-from heapq import heappop, heappush
+from heapq import heappush, heappop
 
 
 def find_start(grid: Grid[str]) -> Point:
@@ -62,9 +62,9 @@ def ord_override(char: str) -> int:
     if char == "S":
         return 0
     elif char == "E":
-        return ord("z") - ord("a")
+        return 25
     else:
-        return ord(char) - ord("a")
+        return ord(char) - 97
 
 
 def part01_answer() -> str:
