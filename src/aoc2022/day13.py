@@ -3,19 +3,35 @@ from src.common.dataload import DataLoader
 import json
 
 
+def calculate_depth(line: str) -> tuple[bool, int]:
+    count = 0
+    empty = True
+    for char in line:
+        if char == "[":
+            count += 1
+        elif char.isdigit():
+            empty = False
+    return (empty, count)
+
+
 def compare_lines(line1: str, line2: str) -> bool:
     line1_parsed = json.loads(line1)
     line2_parsed = json.loads(line2)
     left = flatten(line1_parsed)
     right = flatten(line2_parsed)
-    try:
-        for i in range(len(right)):
-            if left[i] == right[i] and i == len(right) - 1 and len(right) < len(left):
-                return False
-            if left[i] > right[i]:
-                return False
-    except IndexError as index_error:
-        print(f"{index_error}\nLeft: {left}\nRight: {right}\n")
+
+    line1_empty, line1_depth = calculate_depth(line1)
+    line2_empty, line2_depth = calculate_depth(line2)
+    if line1_empty and line2_empty and line1_depth > line2_depth:
+        return False
+
+    for i in range(len(left)):
+        if i >= len(right):
+            break
+        if left[i] > right[i]:
+            return False
+        # if left[i] == right[i] and i == len(right) - 1 and len(right) < len(left):
+        #     return False
     return True
 
 
@@ -23,7 +39,7 @@ def load_and_parse() -> list[tuple[str, str]]:
     loader = DataLoader(2022, "day13.txt")
     lines = loader.readlines_str(True)
     result: list[tuple[str, str]] = list()
-    for i in range(2, len(lines), 3):
+    for i in range(2, len(lines) + 1, 3):
         pair_of_lines = (lines[i - 2], lines[i - 1])
         result.append(pair_of_lines)
     return result
@@ -31,8 +47,9 @@ def load_and_parse() -> list[tuple[str, str]]:
 
 def part01_answer() -> str:
     line_pairs = load_and_parse()
-    count = 0
-    for line_pair in line_pairs:
+    valid_pairs: list[int] = []
+    for i, line_pair in enumerate(line_pairs):
         if compare_lines(line_pair[0], line_pair[1]):
-            count += 1
-    return str(count)
+            valid_pairs.append(i + 1)
+    total = sum(valid_pairs)
+    return str(total)
