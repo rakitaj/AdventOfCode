@@ -99,9 +99,9 @@ print("Advent of Code 2022: 12-1")
 answer = src.aoc2022.day12.part01_answer()
 print(answer)
 
-# print("Advent of Code 2022: 12-2")
-# answer = src.aoc2022.day12.part02_answer()
-# print(answer)
+print("Advent of Code 2022: 12-2")
+answer = src.aoc2022.day12.part02_answer()
+print(answer)
 
 print("Advent of Code 2022: 13-1")
 answer = src.aoc2022.day13.part01_answer()
