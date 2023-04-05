@@ -1,37 +1,36 @@
-from src.common.extensions import flatten
+from typing import Any
 from src.common.dataload import DataLoader
 import json
 
-
-def calculate_depth(line: str) -> tuple[bool, int]:
-    count = 0
-    empty = True
-    for char in line:
-        if char == "[":
-            count += 1
-        elif char.isdigit():
-            empty = False
-    return (empty, count)
+# Results - part 1
+# 4554 - too low
 
 
 def compare_lines(line1: str, line2: str) -> bool:
     line1_parsed = json.loads(line1)
     line2_parsed = json.loads(line2)
-    left = flatten(line1_parsed)
-    right = flatten(line2_parsed)
+    try:
+        result = compare(line1_parsed, line2_parsed)
+    except IndexError as ex:
+        result = False
+    return result
 
-    line1_empty, line1_depth = calculate_depth(line1)
-    line2_empty, line2_depth = calculate_depth(line2)
-    if line1_empty and line2_empty and line1_depth > line2_depth:
-        return False
 
-    for i in range(len(left)):
-        if i >= len(right):
-            break
-        if left[i] > right[i]:
-            return False
-        # if left[i] == right[i] and i == len(right) - 1 and len(right) < len(left):
-        #     return False
+def compare(line1: Any, line2: Any) -> bool:
+    for i in range(len(line1)):
+        e1 = line1[i]
+        e2 = line2[i]
+        if isinstance(e1, list) and isinstance(e2, list):
+            return compare(e1, e2)
+        elif isinstance(e1, int) and isinstance(e2, int):
+            if e1 > e2:
+                return False
+        elif isinstance(e1, list) and isinstance(e2, int):
+            return compare(e1, [e2])
+        elif isinstance(e1, int) and isinstance(e2, list):
+            return compare([e1], e2)
+        else:
+            breakpoint()
     return True
 
 
