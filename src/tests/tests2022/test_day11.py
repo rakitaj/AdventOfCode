@@ -1,4 +1,4 @@
-from src.aoc2022.day11 import parse_to_monkey, Monkey, parse_data, tick, tick2
+from src.aoc2022.day11 import parse_to_monkey, parse_data, tick, tick2
 from src.common.dataload import DataLoader
 
 one_monkey = """  Monkey 0:

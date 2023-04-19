@@ -17,3 +17,6 @@ disallow_untyped_defs = true
 [[tool.mypy.overrides]]
 module = "parse"
 ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 110

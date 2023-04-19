@@ -3,3 +3,4 @@ black
 pytest
 parse
 jupyter
+ruff
