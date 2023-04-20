@@ -24,6 +24,35 @@ class Point:
         return hash((self.x, self.y))
 
 
+def points_between(start: Point, end: Point) -> list[Point]:
+    """
+    Use Bresenham's line algorithm to find all points on a line between two Point objects.
+    https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+    """
+    return _points_between(start, end)
+
+
+def _points_between(p0: Point, p1: Point) -> list[Point]:
+    result: list[Point] = list()
+    x0, y0 = p0.to_tuple()
+    x1, y1 = p1.to_tuple()
+    # Vertical line
+    if x1 - x0 == 0:
+        for i in range(abs(y1 - y0) + 1):
+            if y1 - y0 > 0:
+                result.append(Point(x0, y0 + i))
+            else:
+                result.append(Point(x0, y0 - i))
+    # Horizontal line
+    else:
+        for i in range(abs(x1 - x0) + 1):
+            if x1 - x0 > 0:
+                result.append(Point(x0 + i, y0))
+            else:
+                result.append(Point(x0 - i, y0))
+    return result
+
+
 class Grid(Generic[T]):
     def __init__(self, x_size: int, y_size: int, contents: list[T]):
         if len(contents) != x_size * y_size:

@@ -1,6 +1,6 @@
 import pytest
 from src.common.extensions import single, flatten
-from src.common.grid import Grid, Point
+from src.common.grid import Grid, Point, points_between
 
 small_grid_input = """1 2 3
 4 5 6
@@ -79,3 +79,13 @@ def test_hash_point_in_set_should_be_false():
 def test_flatten_array(nested_array, flattened_array: list[int]):
     actual = flatten(nested_array)
     assert actual == flattened_array
+
+
+@pytest.mark.parametrize(
+    "start, end, expected", [[(498, 4), (498, 6), [Point(498, 4), Point(498, 5), Point(498, 6)]]]
+)
+def test_bresenhams_algo(start: tuple[int, int], end: tuple[int, int], expected: list[Point]):
+    start_point = Point(start[0], start[1])
+    end_point = Point(end[0], end[1])
+    points = points_between(start_point, end_point)
+    assert points == expected
