@@ -46,6 +46,18 @@ def test_point_gt_lt_should_raise() -> None:
         Point(0, 0) > Point(5, 5)  # type: ignore
 
 
+def test_point_add() -> None:
+    p1 = Point(2, 4)
+    p2 = Point(3, 7)
+    assert p1 + p2 == Point(5, 11)
+
+
+def test_point_subtract() -> None:
+    p1 = Point(10, 5)
+    p2 = Point(12, 4)
+    assert p1 - p2 == Point(-2, 1)
+
+
 @pytest.mark.parametrize("target, expected", [(1, (0, 0)), (4, (0, 1)), (10, None)])
 def test_find(target: int, expected: tuple[int, int] | None) -> None:
     grid = Grid.from_lines_to_int_grid(small_grid_input, True)
@@ -83,7 +95,11 @@ def test_flatten_array(nested_array, flattened_array: list[int]):
 
 
 @pytest.mark.parametrize(
-    "start, end, expected", [[(498, 4), (498, 6), [Point(498, 4), Point(498, 5), Point(498, 6)]]]
+    "start, end, expected",
+    [
+        [(498, 4), (498, 6), [Point(498, 4), Point(498, 5), Point(498, 6)]],
+        [(498, 6), (496, 6), [Point(498, 6), Point(497, 6), Point(496, 6)]],
+    ],
 )
 def test_bresenhams_algo(start: tuple[int, int], end: tuple[int, int], expected: list[Point]):
     start_point = Point(start[0], start[1])

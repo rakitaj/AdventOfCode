@@ -21,16 +21,40 @@ class Point:
     def __hash__(self) -> int:
         return hash((self.x, self.y))
 
+    def __add__(self, other: Point) -> Point:
+        if isinstance(other, type(self)):
+            return Point(self.x + other.x, self.y + other.y)
+        raise TypeError(f"Can only add types of Point. The argument passed is type {type(other)}.")
 
-def points_between(start: Point, end: Point) -> list[Point]:
+    def __sub__(self, other: Point) -> Point:
+        if isinstance(other, type(self)):
+            return Point(self.x - other.x, self.y - other.y)
+        raise TypeError(f"Can only subtract types of Point. The argument passed is type {type(other)}.")
+
+
+def points_between(p0: Point, p1: Point) -> list[Point]:
+    diff: Point = p1 - p0
+    points = list()
+    if diff.x > 0:
+        for i in range(diff.x + 1):
+            points.append(Point(p0.x + i, p0.y))
+    if diff.x < 0:
+        for i in range(0, diff.x - 1, -1):
+            points.append(Point(p0.x + i, p0.y))
+    if diff.y > 0:
+        for i in range(diff.y + 1):
+            points.append(Point(p0.x, p0.y + i))
+    if diff.y < 0:
+        for i in range(0, diff.y - 1, -1):
+            points.append(Point(p0.x, p0.y + i))
+    return points
+
+
+def points_between_bresenham(p0: Point, p1: Point) -> list[Point]:
     """
     Use Bresenham's line algorithm to find all points on a line between two Point objects.
     https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
     """
-    return _points_between(start, end)
-
-
-def _points_between(p0: Point, p1: Point) -> list[Point]:
     result: list[Point] = list()
     x0, y0 = p0.to_tuple()
     x1, y1 = p1.to_tuple()
@@ -65,10 +89,9 @@ class Grid[T]:
 
     def try_get(self, x: int, y: int) -> bool:
         """Check if the (x, y) coordinate is within the bounds of the grid."""
-        # x_in_bounds = (0 <= x) and (x < self.x_size)
-        # y_in_bounds = (0 <= y) and (y < self.y_size)
-        # return x_in_bounds and y_in_bounds
-        return ((0 <= x) and (x < self.x_size)) and ((0 <= y) and (y < self.y_size))
+        x_in_bounds = (0 <= x) and (x < self.x_size)
+        y_in_bounds = (0 <= y) and (y < self.y_size)
+        return x_in_bounds and y_in_bounds
 
     def find(self, target: T) -> tuple[int, int] | None:
         """Find the first occurance of the target in the grid."""
