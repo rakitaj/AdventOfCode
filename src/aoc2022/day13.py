@@ -19,7 +19,6 @@ def compare_lines(line1: str, line2: str) -> bool:
 
 
 def compare(line1: Any, line2: Any) -> int:
-
     for i in range(len(line1)):
         e1 = line1[i]
         e2 = line2[i]
