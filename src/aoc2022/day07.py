@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import cast
+from typing import cast, Sequence
 import parse
 
 from src.common.dataload import DataLoader
@@ -88,7 +88,7 @@ def lex_instruction(instruction: str, line_number: int) -> tuple[str, str, str, 
 
 
 class Lexer:
-    def __init__(self, instructions: list[str]):
+    def __init__(self, instructions: Sequence[str]):
         self.instructions = instructions
 
     def lex(self) -> list[tuple[str, str, str, int]]:
