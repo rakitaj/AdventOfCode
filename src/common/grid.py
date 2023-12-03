@@ -1,8 +1,5 @@
 from __future__ import annotations
-from typing import TypeVar, Generic, Callable
-
-T = TypeVar("T")
-
+from typing import Callable, Sequence
 
 class Point:
     def __init__(self, x: int, y: int):
@@ -53,7 +50,7 @@ def _points_between(p0: Point, p1: Point) -> list[Point]:
     return result
 
 
-class Grid(Generic[T]):
+class Grid[T]:
     def __init__(self, x_size: int, y_size: int, contents: list[T]):
         if len(contents) != x_size * y_size:
             raise ValueError(f"Size {contents} is not equal to {x_size} * {y_size}")
@@ -121,7 +118,7 @@ class Grid(Generic[T]):
         return valid_moves
 
     @staticmethod
-    def from_lines(lines: list[str], convert_func: Callable[[str], T], split: bool = True) -> Grid[T]:
+    def from_lines(lines: Sequence[str], convert_func: Callable[[str], T], split: bool = True) -> Grid[T]:
         contents: list[T] = list()
         x_size = 0
         for horizontal_line in lines:
@@ -136,7 +133,7 @@ class Grid(Generic[T]):
         return grid
 
     @staticmethod
-    def from_lines_to_int_grid(lines: list[str], split: bool) -> Grid[int]:
+    def from_lines_to_int_grid(lines: Sequence[str], split: bool) -> Grid[int]:
         return Grid.from_lines(lines, lambda x: int(x), split)
 
     @staticmethod

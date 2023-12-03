@@ -2,12 +2,13 @@ from src.common.dataload import DataLoader
 import re
 from dataclasses import dataclass
 from collections import deque
+from typing import Sequence
 
 
 @dataclass
 class StacksAndInstructions:
     stacks: list[deque[str]]
-    instructions: list[str]
+    instructions: Sequence[str]
 
 
 num_pattern = re.compile("(\\d+)")
@@ -21,13 +22,13 @@ def load_and_parse() -> StacksAndInstructions:
     return result
 
 
-def parse_lines(lines: list[str]) -> StacksAndInstructions:
+def parse_lines(lines: Sequence[str]) -> StacksAndInstructions:
     num_stacks, line_num_end_stacks_setup = find_quantity(lines)
     stacks = populate_stacks(lines, num_stacks, line_num_end_stacks_setup)
     return StacksAndInstructions(stacks, lines[line_num_end_stacks_setup + 1 :])
 
 
-def find_quantity(all_data: list[str]) -> tuple[int, int]:
+def find_quantity(all_data: Sequence[str]) -> tuple[int, int]:
     """
     Look for the largest number before the black line. That will be the number of stacks.
     Returns a tuple[int, int] of (num_stacks, line_num). Returns (num_stacks, -1) if it can't
@@ -43,7 +44,7 @@ def find_quantity(all_data: list[str]) -> tuple[int, int]:
     return (max_number, -1)
 
 
-def populate_stacks(data: list[str], num_stacks: int, stop_at: int) -> list[deque[str]]:
+def populate_stacks(data: Sequence[str], num_stacks: int, stop_at: int) -> list[deque[str]]:
     stacks: list[deque[str]] = list()
     for _ in range(num_stacks):
         stacks.append(deque())

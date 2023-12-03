@@ -15,19 +15,10 @@ def compare_lines(line1: str, line2: str) -> bool:
     except IndexError as ex:
         print(ex)
         result = False
-    return result
+    return result > 0
 
 
 def compare(line1: Any, line2: Any) -> int:
-    # if isinstance(line1, int) and isinstance(line2, int):
-    #     return line1 - line2
-    # else:
-    #     if isinstance(line1, int):
-    #         line1 = [line1]
-    #     if isinstance(line2, int):
-    #         line2 = [line2]
-    #     results: list[bool] = []
-    #     for n1, n2 in zip(line1, line2):
 
     for i in range(len(line1)):
         e1 = line1[i]

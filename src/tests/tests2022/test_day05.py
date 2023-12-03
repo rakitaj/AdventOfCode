@@ -41,7 +41,7 @@ move 3 from 1 to 3
 move 2 from 2 to 1
 move 1 from 1 to 2""".splitlines()
     stacks_and_instructions = parse_lines(lines)
-    actual = execute_instructions(stacks_and_instructions)
+    actual = execute_instructions(stacks_and_instructions)  
     assert actual == ["C", "M", "Z"]
 
 

@@ -2,5 +2,4 @@ mypy
 black
 pytest
 parse
-jupyter
 ruff
