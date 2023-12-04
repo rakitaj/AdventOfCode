@@ -19,6 +19,11 @@ def test_parse_digits(line: str, expected: int):
         ("xtwone3four", 24),
         ("zoneight234", 14),
         ("7pqrstsixteen", 76),
+        ("86625three2one", 81),
+        ("98jhbgtdlrmjonesix", 96),
+        ("48four8", 48),
+        ("1m", 11),
+        ("krpjpfxbrstwosixkr3dceightwoj", 22),
     ],
 )
 def test_parse_string_digits(line: str, expected: int):

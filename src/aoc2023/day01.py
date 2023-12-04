@@ -30,28 +30,24 @@ def parse_digits(s: str) -> int:
     return (first * 10) + last
 
 
-def try_parse_digit(s: str, i: int) -> tuple[bool, int, int]:
+def try_parse_digit(s: str, i: int) -> tuple[bool, int]:
     if s[i].isdigit():
-        return (True, int(s[i]), 1)
+        return (True, int(s[i]))
     for key, value in digits.items():
         if s[i::].startswith(key):
-            return (True, value, len(key))
-    return (False, -1, -1)
+            return (True, value)
+    return (False, -1)
 
 
 def parse_string_digits(s: str) -> int:
     first = -1
     last = -1
-    i = 0
-    while i < len(s):
-        parsed, num, skipahead = try_parse_digit(s, i)
+    for i in range(len(s)):
+        parsed, num = try_parse_digit(s, i)
         if parsed:
             if first == -1:
                 first = num
             last = num
-            i += skipahead
-        else:
-            i += 1
     return (first * 10) + last
 
 
