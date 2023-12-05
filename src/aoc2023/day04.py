@@ -42,19 +42,17 @@ def part01_answer() -> str:
 def cards_won_algorithm(lines: Sequence[str]) -> list[int]:
     cards = [1] * len(lines)
     for i, val in enumerate(cards):
-        print(f"{len(lines)} - {i}")
-        for _ in range(val):
-            card_id, set1, set2 = parse_line(lines[i])
-            card_ids_won = cards_won(card_id, set1, set2)
-            for id_won in card_ids_won:
-                if id_won < len(cards):
-                    cards[id_won - 1] += 1
+        card_id, set1, set2 = parse_line(lines[i])
+        card_ids_won = cards_won(card_id, set1, set2)
+        for card_id in card_ids_won:
+            cards[card_id - 1] += val
     return cards
 
 
 def part02_answer() -> str:
     """
     5903503 - too low
+    6189740 - correct
     """
     loader = DataLoader(2023, "day04.txt")
     lines = loader.readlines_str()

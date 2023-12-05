@@ -138,7 +138,7 @@ class Grid[T]:
         return Grid.from_lines(lines, lambda x: int(x), split)
 
     @staticmethod
-    def from_strings_no_spaces(lines: list[str]) -> Grid[str]:
+    def from_strings_no_spaces(lines: Sequence[str]) -> Grid[str]:
         x_size = len(lines[0])
         y_size = len(lines)
         result: list[str] = list()
