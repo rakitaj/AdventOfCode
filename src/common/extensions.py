@@ -17,3 +17,9 @@ def flatten[T](array: Sequence[T]) -> list[T]:
         else:
             result.append(e)
     return result
+
+
+def must[T](value: T | None) -> T:
+    if value is None:
+        raise ValueError(f"Called must on a value which is None.")
+    return value
