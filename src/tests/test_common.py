@@ -1,7 +1,7 @@
 import pytest
 from src.common.extensions import single, flatten
 from src.common.grid import Grid, Point, points_between
-from src.common.parsing import extract_integer
+from src.common.parsing import extract_integer, extract_integers
 
 small_grid_input = """1 2 3
 4 5 6
@@ -97,4 +97,10 @@ def test_bresenhams_algo(start: tuple[int, int], end: tuple[int, int], expected:
 )
 def test_extract_integer(string: str, expected: int):
     actual = extract_integer(string)
+    assert actual == expected
+
+
+@pytest.mark.parametrize("string, expected", [("seeds: 79 14 55 13", [79, 14, 55, 13])])
+def test_extract_integers(string: str, expected: int):
+    actual = extract_integers(string)
     assert actual == expected

@@ -20,6 +20,7 @@ def flatten[T](array: Sequence[T]) -> list[T]:
 
 
 def must[T](value: T | None) -> T:
+    """Check that a value must exist. Another way of saying that is the value must not be null."""
     if value is None:
-        raise ValueError(f"Called must on a value which is None.")
+        raise ValueError(f"Called not_null on a value which is None.")
     return value
