@@ -3,7 +3,6 @@ from src.common.extensions import must
 from dataclasses import dataclass
 from typing import Sequence
 from src.common.dataload import DataLoader
-from collections import Counter
 
 
 def is_empty_or_whitespace(string: str) -> bool:
@@ -41,18 +40,17 @@ class SeedOptimizer:
 
     def location_from_ranges(self) -> int:
         """Get the seed locations from the seed number ranges."""
-        locations: list[int] = list()
-        counts: Counter[int] = Counter()
+        min_seed = 1000000000000000000000000000000
+        seeds_length = len(self.seeds)
         for i in range(0, len(self.seeds), 2):
-            print(f"{len(self.seeds)} - {i}")
+            print(f"{seeds_length} - {i}")
             seed = self.seeds[i]
             length = self.seeds[i + 1]
             for n in range(seed, seed + length):
-                counts[n] += 1
-        for seed in counts.keys():
-            location = self.location(seed)
-            locations.append(location)
-        return min(locations)
+                location = self.location(n)
+                if location < min_seed:
+                    min_seed = location
+        return min_seed
 
     def location(self, n: int) -> int:
         """Get the final location of a seed."""
