@@ -10,7 +10,8 @@ check_untyped_defs = true
 [[tool.mypy.overrides]]
 module = [
   "src.common.*",
-  "src.aoc2022.*"
+  "src.aoc2022.*",
+  "src.aoc2023.*"
 ]
 disallow_untyped_defs = true
 

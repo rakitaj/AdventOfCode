@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import cast
+from typing import cast, Sequence
 import parse
 
 from src.common.dataload import DataLoader
@@ -81,13 +81,14 @@ def lex_instruction(instruction: str, line_number: int) -> tuple[str, str, str, 
         lex_file_result = lex_file.parse(instruction)
         if lex_file_result is None:
             raise ValueError(f"Tried to lex/tokenize filename {instruction} and failed.")
+        assert type(lex_file_result) is parse.Result
         filename = cast(str, lex_file_result["filename"])
         filesize = cast(str, lex_file_result["filesize"])
         return ("contents", filename, filesize, line_number)
 
 
 class Lexer:
-    def __init__(self, instructions: list[str]):
+    def __init__(self, instructions: Sequence[str]):
         self.instructions = instructions
 
     def lex(self) -> list[tuple[str, str, str, int]]:

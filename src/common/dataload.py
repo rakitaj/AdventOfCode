@@ -5,7 +5,7 @@ from pathlib import Path
 class DataLoader:
     def __init__(self, year: int, filename: str):
         self.filename = filename
-        self.filepath = Path(self._get_current_dir(), "../../data", f"aoc{year}", filename)
+        self.filepath = Path(self._get_current_dir(), "../../data", str(year), filename)
 
     def _get_current_dir(self) -> Path:
         path = Path(os.path.dirname(os.path.realpath(__file__)))

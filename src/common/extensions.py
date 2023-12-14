@@ -1,16 +1,14 @@
-from typing import TypeVar, Collection, Sequence
-
-T = TypeVar("T")
+from typing import Collection, Sequence
 
 
-def single(iterable: Collection[T]) -> T:
+def single[T](iterable: Collection[T]) -> T:
     if len(iterable) != 1:
         raise ValueError(f"Collection must have a size of exactly 1. Collection is {iterable}")
     else:
         return iterable.__iter__().__next__()
 
 
-def flatten(array: Sequence[T]) -> list[T]:
+def flatten[T](array: Sequence[T]) -> list[T]:
     result: list[T] = []
     for e in array:
         if type(e) is list:
@@ -19,3 +17,10 @@ def flatten(array: Sequence[T]) -> list[T]:
         else:
             result.append(e)
     return result
+
+
+def must[T](value: T | None) -> T:
+    """Check that a value must exist. Another way of saying that is the value must not be null."""
+    if value is None:
+        raise ValueError(f"Called not_null on a value which is None.")
+    return value
