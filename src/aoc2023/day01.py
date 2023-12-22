@@ -1,3 +1,4 @@
+from typing import Sequence
 from src.common.dataload import DataLoader
 
 digits = {
@@ -69,7 +70,7 @@ def part02_answer() -> str:
     return str(total)
 
 
-def _part02_answer(strings: list[str]) -> int:
+def _part02_answer(strings: Sequence[str]) -> int:
     total = 0
     for s in strings:
         num = parse_string_digits(s)

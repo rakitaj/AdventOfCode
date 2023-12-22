@@ -1,3 +1,4 @@
+from typing import Sequence
 from src.common.dataload import DataLoader
 from src.common.grid import Point
 
@@ -35,7 +36,7 @@ def update_tail(head: Point, tail: Point) -> Point:
     return tail
 
 
-def parse_data(lines: list[str]) -> list[tuple[str, int]]:
+def parse_data(lines: Sequence[str]) -> list[tuple[str, int]]:
     instructions = list()
     for line in lines:
         direction, magnitue = line.split()

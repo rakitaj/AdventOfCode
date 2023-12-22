@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Sequence
 from src.common.dataload import DataLoader
 
 
@@ -70,7 +71,7 @@ class CPUEmulator:
         return total
 
 
-def parse_data(lines: list[str]) -> list[Instruction]:
+def parse_data(lines: Sequence[str]) -> list[Instruction]:
     result: list[Instruction] = list()
     for line in lines:
         parts = line.split()

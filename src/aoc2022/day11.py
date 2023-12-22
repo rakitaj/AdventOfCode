@@ -1,5 +1,5 @@
 import re
-from typing import Callable
+from typing import Callable, Sequence
 from src.common.dataload import DataLoader
 
 
@@ -60,7 +60,7 @@ def parse_num(line: str) -> int:
     return num
 
 
-def parse_to_monkey(data: list[str]) -> Monkey:
+def parse_to_monkey(data: Sequence[str]) -> Monkey:
     parsed_id = parse_num(data[0])
     parsed_starting_items = parse_starting_items(data[1])
     parsed_op = parse_op(data[2])
