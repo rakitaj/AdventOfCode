@@ -1,6 +1,6 @@
 import re
 from dataclasses import dataclass
-from src.common.dataload import DataLoader
+from src.common.dataload import DataLoader, Answers
 
 
 # "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
@@ -57,25 +57,25 @@ def min_cubes_line(line: str) -> CubeCounts:
     return cube_counts
 
 
-def part01_answer():
-    loader = DataLoader(2023, "day02.txt")
-    lines = loader.readlines_str()
-    total = 0
-    predicate = CubeCounts(12, 13, 14)
-    for line in lines:
-        game_id_match = game_pattern.search(line)
-        if parse_and_test_line(line, predicate):
-            assert game_id_match is not None
-            total += int(game_id_match.group(1))
-    return total
+class Day02Answers(Answers):
+    def __init__(self):
+        loader = DataLoader(2023, "day02.txt")
+        self.data = loader.readlines_str()
 
+    def part1(self) -> int:
+        total = 0
+        predicate = CubeCounts(12, 13, 14)
+        for line in self.data:
+            game_id_match = game_pattern.search(line)
+            if parse_and_test_line(line, predicate):
+                assert game_id_match is not None
+                total += int(game_id_match.group(1))
+        return total
 
-def part02_answer():
-    loader = DataLoader(2023, "day02.txt")
-    lines = loader.readlines_str()
-    total = 0
-    for line in lines:
-        min_cubes = min_cubes_line(line)
-        power = min_cubes.blue * min_cubes.green * min_cubes.red
-        total += power
-    return total
+    def part2(self) -> int:
+        total = 0
+        for line in self.data:
+            min_cubes = min_cubes_line(line)
+            power = min_cubes.blue * min_cubes.green * min_cubes.red
+            total += power
+        return total
