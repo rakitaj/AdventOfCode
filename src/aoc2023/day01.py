@@ -1,5 +1,5 @@
 from typing import Sequence
-from src.common.dataload import DataLoader
+from src.common.dataload import DataLoader, Answers
 
 digits = {
     "one": 1,
@@ -52,27 +52,28 @@ def parse_string_digits(s: str) -> int:
     return (first * 10) + last
 
 
-def part01_answer() -> str:
-    strings = load_and_parse()
-    total = 0
-    for s in strings:
-        num = parse_digits(s)
-        total += num
-    return str(total)
-
-
-def part02_answer() -> str:
-    """
-    54718 - too high
-    """
-    strings = load_and_parse()
-    total = _part02_answer(strings)
-    return str(total)
-
-
 def _part02_answer(strings: Sequence[str]) -> int:
     total = 0
     for s in strings:
         num = parse_string_digits(s)
         total += num
     return total
+
+
+class Day01Answers(Answers):
+    def __init__(self):
+        self.data = load_and_parse()
+
+    def part1(self) -> str:
+        total = 0
+        for s in self.data:
+            num = parse_digits(s)
+            total += num
+        return str(total)
+
+    def part2(self) -> str:
+        """
+        54718 - too high
+        """
+        total = _part02_answer(self.data)
+        return str(total)

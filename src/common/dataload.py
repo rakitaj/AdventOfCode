@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from abc import ABC, abstractmethod
 
 
 class DataLoader:
@@ -21,3 +22,13 @@ class DataLoader:
     def read(self) -> str:
         with open(self.filepath, "r") as fp:
             return fp.read()
+
+
+class Answers(ABC):
+    @abstractmethod
+    def part1(self) -> str:
+        pass
+
+    @abstractmethod
+    def part2(self) -> str:
+        pass
