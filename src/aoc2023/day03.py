@@ -54,6 +54,17 @@ def part_numbers_all_lines(lines: Sequence[str]) -> int:
     return sum(total)
 
 
+def gear_numbers(prev_line, line, next_line) -> list[int]:
+    numbers: list[int] = list()
+    symbol_indices = match_symbols(line)
+    number_matches: list[re.Match] = list()
+    for l in (prev_line, line, next_line):
+        for m in pattern_numbers.finditer(l):
+            number_matches.append(m)
+
+    return numbers
+
+
 class Day03Answers(Answers):
     def __init__(self):
         loader = DataLoader(2023, "day03.txt")

@@ -1,4 +1,4 @@
-from src.common.dataload import DataLoader
+from src.common.dataload import DataLoader, Answers
 from src.common.parsing import extract_integer
 from src.common.extensions import must
 from typing import Sequence
@@ -49,12 +49,24 @@ def cards_won_algorithm(lines: Sequence[str]) -> list[int]:
     return cards
 
 
-def part02_answer() -> str:
-    """
-    5903503 - too low
-    6189740 - correct
-    """
-    loader = DataLoader(2023, "day04.txt")
-    lines = loader.readlines_str()
-    card_array = cards_won_algorithm(lines)
-    return str(sum(card_array))
+class Day04Answers(Answers):
+    def __init__(self):
+        loader = DataLoader(2023, "day04.txt")
+        self.data = loader.readlines_str()
+
+    def part1(self) -> str:
+        total = 0
+        for line in self.data:
+            game_id, set1, set2 = parse_line(line)
+            points = card_points(set1, set2)
+            total += points
+        return str(total)
+
+    def part2(self) -> str:
+        """
+        5903503 - too low
+        6189740 - correct
+        """
+
+        card_array = cards_won_algorithm(self.data)
+        return str(sum(card_array))

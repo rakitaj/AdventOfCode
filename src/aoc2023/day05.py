@@ -2,7 +2,7 @@ from src.common.parsing import extract_integers
 from src.common.extensions import must
 from dataclasses import dataclass
 from typing import Sequence
-from src.common.dataload import DataLoader
+from src.common.dataload import DataLoader, Answers
 
 
 def is_empty_or_whitespace(string: str) -> bool:
@@ -105,21 +105,22 @@ def parse_range_offsets(lines: Sequence[str], i: int) -> tuple[int, OffsetMappin
     return (i, map)
 
 
-def part01_answer():
-    loader = DataLoader(2023, "day05.txt")
-    lines = loader.readlines_str()
-    seed_optimizer = parse(lines)
-    seed_locations: list[int] = []
-    for seed_num in seed_optimizer.seeds:
-        location = seed_optimizer.location(seed_num)
-        seed_locations.append(location)
-    min_seed_location = min(seed_locations)
-    return str(min_seed_location)
+class Day05Answers(Answers):
+    def __init__(self):
+        loader = DataLoader(2023, "day05.txt")
+        self.data = loader.readlines_str()
 
+    def part1(self) -> str:
+        seed_optimizer = parse(self.data)
+        seed_locations: list[int] = []
+        for seed_num in seed_optimizer.seeds:
+            location = seed_optimizer.location(seed_num)
+            seed_locations.append(location)
+        min_seed_location = min(seed_locations)
+        return str(min_seed_location)
 
-def part02_answer():
-    loader = DataLoader(2023, "day05.txt")
-    lines = loader.readlines_str()
-    seed_optimizer = parse(lines)
-    min_location = seed_optimizer.location_from_ranges()
-    return str(min_location)
+    def part2(self) -> str:
+        return "Ignore"
+        seed_optimizer = parse(self.data)
+        min_location = seed_optimizer.location_from_ranges()
+        return str(min_location)
