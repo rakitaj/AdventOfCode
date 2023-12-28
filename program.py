@@ -12,15 +12,3 @@ for answers in Answers.__subclasses__():
     print(instance.part1())
     print(f"Advent of Code 2023: {day}-2")
     print(instance.part2())
-
-
-print("Advent of Code 2023: 4-1")
-print(src.aoc2023.day04.part01_answer())
-print("Advent of Code 2023: 4-2")
-print(src.aoc2023.day04.part02_answer())
-
-
-print("Advent of Code 2023: 5-1")
-print(src.aoc2023.day05.part01_answer())
-# print("Advent of Code 2023: 5-2")
-# print(src.aoc2023.day05.part02_answer())
