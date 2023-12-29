@@ -54,14 +54,28 @@ def part_numbers_all_lines(lines: Sequence[str]) -> int:
     return sum(total)
 
 
-def gear_numbers(prev_line, line, next_line) -> list[int]:
+def gear_adjacent(matches: list[re.Match], i: int) -> tuple[int, int] | None:
+    adjacent_nums = list()
+    for m in matches:
+        if i >= m.start() - 1 and i <= m.end():
+            adjacent_nums.append(int(m.group(1)))
+    if len(adjacent_nums) == 2:
+        return (adjacent_nums[0], adjacent_nums[1])
+    else:
+        return None
+
+
+def gear_numbers(prev_line: str, line: str, next_line: str) -> list[int]:
     numbers: list[int] = list()
     symbol_indices = match_symbols(line)
     number_matches: list[re.Match] = list()
     for l in (prev_line, line, next_line):
         for m in pattern_numbers.finditer(l):
             number_matches.append(m)
-
+    for i in symbol_indices:
+        nums_adjacent = gear_adjacent(number_matches, i)
+        if isinstance(nums_adjacent, tuple):
+            numbers.extend(nums_adjacent)
     return numbers
 
 
