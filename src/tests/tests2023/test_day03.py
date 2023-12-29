@@ -1,5 +1,5 @@
 import pytest
-from src.aoc2023.day03 import part_numbers, symbol_adjacent, part_numbers_all_lines
+from src.aoc2023.day03 import part_numbers, symbol_adjacent, part_numbers_all_lines, gear_numbers
 
 sample_data = """467..114..
 ...*......
@@ -52,4 +52,10 @@ def test_part_numbers_sample_data_long():
 
 def test_part_numbers_eol_does_not_count():
     actual = part_numbers_all_lines(["123..........45*..6\n"])
+    assert actual == 45
+
+
+@pytest.mark.skip
+def test_gear_numbers_sample_data():
+    actual = gear_numbers(sample_data[0], sample_data[1], sample_data_2[2])
     assert actual == 45
