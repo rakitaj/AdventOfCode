@@ -1,4 +1,4 @@
-from src.common.grid import Point, points_between
+from src.common.grid import Point
 
 
 class Cave:

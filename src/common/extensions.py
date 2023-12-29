@@ -11,7 +11,7 @@ def single[T](iterable: Collection[T]) -> T:
 def flatten[T](array: Sequence[T]) -> list[T]:
     result: list[T] = []
     for e in array:
-        if type(e) is list:
+        if isinstance(e, list):
             local_result = flatten(e)
             result.extend(local_result)
         else:
@@ -22,5 +22,5 @@ def flatten[T](array: Sequence[T]) -> list[T]:
 def must[T](value: T | None) -> T:
     """Check that a value must exist. Another way of saying that is the value must not be null."""
     if value is None:
-        raise ValueError(f"Called not_null on a value which is None.")
+        raise ValueError("Called not_null on a value which is None.")
     return value
