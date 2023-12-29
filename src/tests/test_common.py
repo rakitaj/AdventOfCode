@@ -2,6 +2,7 @@ import pytest
 from src.common.extensions import single, flatten
 from src.common.grid import Grid, Point, points_between
 from src.common.parsing import extract_integer, extract_integers
+from src.common.equations import quadratic
 
 small_grid_input = """1 2 3
 4 5 6
@@ -120,3 +121,9 @@ def test_extract_integer(string: str, expected: int):
 def test_extract_integers(string: str, expected: int):
     actual = extract_integers(string)
     assert actual == expected
+
+
+@pytest.mark.parametrize("a, b, c, expected", [(1, -1, -2, (-1, 2))])
+def test_quadratic_equation_solver(a: int, b: int, c: int, expected: tuple[int, int]):
+    root1, root2 = quadratic(a, b, c)
+    assert {root1, root2} == set(expected)
