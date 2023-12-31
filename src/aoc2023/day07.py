@@ -12,6 +12,22 @@ class HandType(IntEnum):
     HIGH_CARD = 1
 
 
+def card_rank(rank: str) -> int:
+    match rank:
+        case "A":
+            return 14
+        case "K":
+            return 13
+        case "Q":
+            return 12
+        case "J":
+            return 11
+        case "T":
+            return 10
+        case _:
+            return int(rank)
+
+
 @dataclass
 class Hand:
     hand_type: HandType
@@ -19,8 +35,12 @@ class Hand:
 
 
 def inner_hand_sort(hand1: Hand, hand2: Hand) -> int:
-    # for i in range(len(hand1.contents)):
-    #     if hand1.contents[i] != hand2.contents[i]:
+    assert hand1.hand_type == hand2.hand_type
+    for i in range(len(hand1.contents)):
+        if card_rank(hand1.contents[i]) > card_rank(hand2.contents[i]):
+            return 1
+        if card_rank(hand2.contents[i]) > card_rank(hand1.contents[i]):
+            return -1
     return 0
 
 
