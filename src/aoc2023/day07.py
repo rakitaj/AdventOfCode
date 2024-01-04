@@ -96,35 +96,36 @@ def parse_to_hand_2(line: str) -> Hand:
     jack_count = counts["J"]
     if 5 in counts.values():
         hand_type = HandType.KIND_5
+    elif 4 in counts.values() and "J" in counts:
+        hand_type = HandType.KIND_5
     elif 4 in counts.values():
         hand_type = HandType.KIND_4
-        if jack_count in [1, 4]:
-            hand_type = HandType.KIND_5
+    elif 3 in counts.values() and 2 in counts.values() and "J" in counts:
+        hand_type = HandType.KIND_5
     elif 3 in counts.values() and 2 in counts.values():
         hand_type = HandType.FULL_HOUSE
-        if jack_count in [2, 3]:
-            hand_type = HandType.KIND_5
+    elif 3 in counts.values() and "J" in counts and (counts["J"] == 3 or counts["J"] == 1):
+        hand_type = HandType.KIND_4
     elif 3 in counts.values():
         hand_type = HandType.KIND_3
-        if jack_count in [1, 3]:
-            hand_type = HandType.KIND_4
     elif 2 in counts.values():
-        pair_count = 0
-        for val in counts.values():
-            if val == 2:
-                pair_count += 1
-        if pair_count == 1:
-            hand_type = HandType.PAIR_1
-            if jack_count == 1:
-                hand_type = HandType.KIND_3
-        if pair_count == 2:
+        pair_count = len([x for x in counts.values() if x == 2])
+        if pair_count == 2 and "J" in counts and counts["J"] == 2:
+            hand_type = HandType.KIND_4
+        elif pair_count == 2 and "J" in counts and counts["J"] == 1:
+            hand_type = HandType.FULL_HOUSE
+        elif pair_count == 2:
             hand_type = HandType.PAIR_2
-            if jack_count == 1:
-                hand_type = HandType.FULL_HOUSE
-            if jack_count == 2:
-                hand_type = HandType.KIND_4
+        elif pair_count == 1 and "J" in counts:
+            hand_type = HandType.KIND_3
+        elif pair_count == 1:
+            hand_type = HandType.PAIR_1
     else:
-        hand_type = HandType.HIGH_CARD
+        if "J" in counts:
+            hand_type = HandType.PAIR_1
+        else:
+            hand_type = HandType.HIGH_CARD
+
     return Hand(hand_type, hand_str, int(bid))
 
 
