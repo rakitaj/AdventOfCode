@@ -6,6 +6,7 @@ import src.aoc2023.day04
 import src.aoc2023.day05
 import src.aoc2023.day06
 import src.aoc2023.day07
+import src.aoc2023.day08
 
 for answers in Answers.__subclasses__():
     day = answers.__module__.split(".")[-1]
