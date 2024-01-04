@@ -1,8 +1,8 @@
+from __future__ import annotations
 from typing import Sequence, Callable
 from enum import IntEnum
 from dataclasses import dataclass
 from collections import Counter
-from functools import cmp_to_key
 from src.common.dataload import DataLoader, Answers
 
 
@@ -16,51 +16,35 @@ class HandType(IntEnum):
     HIGH_CARD = 1
 
 
-CARD_RANK = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
-CARD_RANK_2 = ["J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"]
-
-
 @dataclass
 class Hand:
     hand_type: HandType
     contents: str
     bid: int
+    rank_strategy: Callable[[Hand], list[str]]
 
+    CARD_RANK = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
+    CARD_RANK_2 = ["J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"]
 
-def inner_hand_sort(rank_array: list[str], hand1: Hand, hand2: Hand) -> int:
-    assert hand1.hand_type == hand2.hand_type
-    for i, e in enumerate(hand1.contents):
-        if rank_array.index(hand1.contents[i]) > rank_array.index(hand2.contents[i]):
-            return 1
-        if rank_array.index(hand2.contents[i]) > rank_array.index(hand1.contents[i]):
-            return -1
-    return 0
+    def __eq__(self, other: Hand) -> bool:
+        return (
+            (self.hand_type == other.hand_type)
+            and (self.contents == other.contents)
+            and (self.rank_strategy(self) == other.rank_strategy(self))
+        )
 
+    def __lt__(self, other: Hand) -> bool:
+        rank_algo = self.rank_strategy(self)
 
-def compare_hands(hand1: Hand, hand2: Hand) -> int:
-    """
-    Compare two hands.
-    -1 -> hand1 < hand2.
-    0  -> hand1 == hand2.
-    1  -> hand1 > hand2
-    """
-    if hand1.hand_type == hand2.hand_type:
-        return inner_hand_sort(CARD_RANK, hand1, hand2)
-    else:
-        return hand1.hand_type - hand2.hand_type
-
-
-def compare_hands_2(hand1: Hand, hand2: Hand) -> int:
-    """
-    Compare two hands.
-    -1 -> hand1 < hand2.
-    0  -> hand1 == hand2.
-    1  -> hand1 > hand2
-    """
-    if hand1.hand_type == hand2.hand_type:
-        return inner_hand_sort(CARD_RANK_2, hand1, hand2)
-    else:
-        return hand1.hand_type - hand2.hand_type
+        if other.hand_type == self.hand_type:
+            for i, e in enumerate(self.contents):
+                if rank_algo.index(self.contents[i]) < rank_algo.index(other.contents[i]):
+                    return True
+                if rank_algo.index(self.contents[i]) > rank_algo.index(other.contents[i]):
+                    return False
+            return False
+        else:
+            return self.hand_type < other.hand_type
 
 
 def parse_to_hand(line: str) -> Hand:
@@ -86,7 +70,7 @@ def parse_to_hand(line: str) -> Hand:
             hand_type = HandType.PAIR_2
     else:
         hand_type = HandType.HIGH_CARD
-    return Hand(hand_type, hand_str, int(bid))
+    return Hand(hand_type, hand_str, int(bid), lambda x: x.CARD_RANK)
 
 
 def parse_to_hand_2(line: str) -> Hand:
@@ -126,19 +110,15 @@ def parse_to_hand_2(line: str) -> Hand:
         else:
             hand_type = HandType.HIGH_CARD
 
-    return Hand(hand_type, hand_str, int(bid))
+    return Hand(hand_type, hand_str, int(bid), lambda x: x.CARD_RANK_2)
 
 
-def calcuate_answer(
-    lines: Sequence[str],
-    parse_func: Callable[[str], Hand],
-    compare_func: Callable[[Hand, Hand], int],
-) -> int:
+def calcuate_answer(lines: Sequence[str], parse_func: Callable[[str], Hand]) -> int:
     hands: list[Hand] = list()
     for line in lines:
         hand = parse_func(line)
         hands.append(hand)
-    sorted_hands = sorted(hands, key=cmp_to_key(compare_func))
+    sorted_hands = sorted(hands)
     total = 0
     for i, hand in enumerate(sorted_hands):
         total += hand.bid * (i + 1)
@@ -151,9 +131,9 @@ class Day07Answers(Answers):
         self.data = loader.readlines_str()
 
     def part1(self) -> int:
-        answer = calcuate_answer(self.data, parse_to_hand, compare_hands)
+        answer = calcuate_answer(self.data, parse_to_hand)
         return answer
 
     def part2(self) -> int:
-        answer = calcuate_answer(self.data, parse_to_hand_2, compare_hands_2)
+        answer = calcuate_answer(self.data, parse_to_hand_2)
         return answer
