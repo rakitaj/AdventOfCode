@@ -57,3 +57,31 @@ def test_compute_part2_answer_2():
 JJJAK 2""".splitlines()
     answer = calcuate_answer(lines, parse_func=parse_to_hand_2, compare_func=compare_hands_2)
     assert answer == 5
+
+
+@pytest.mark.parametrize(
+    "parse_func, compare_func, expected",
+    [(parse_to_hand, compare_hands, 6592), (parse_to_hand_2, compare_hands_2, 6839)],
+)
+def test_compute_both_parts(parse_func, compare_func, expected: int):
+    lines = """2345A 1
+Q2KJJ 13
+Q2Q2Q 19
+T3T3J 17
+T3Q33 11
+2345J 3
+J345A 2
+32T3K 5
+T55J5 29
+KK677 7
+KTJJT 34
+QQQJA 31
+JJJJJ 37
+JAAAA 43
+AAAAJ 59
+AAAAA 61
+2AAAA 23
+2JJJJ 53
+JJJJ2 41""".splitlines()
+    answer = calcuate_answer(lines, parse_func=parse_func, compare_func=compare_func)
+    assert answer == expected
