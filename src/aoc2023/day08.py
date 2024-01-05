@@ -2,6 +2,7 @@ from src.common.dataload import DataLoader, Answers
 from typing import Sequence, Iterator
 from dataclasses import dataclass
 import re
+import math
 
 word_pattern = re.compile(r"(\w+)")
 
@@ -22,19 +23,22 @@ class Navigator:
         return count
 
     def path2(self) -> int:
-        count = 0
-        current: list[str] = list()
+        current_keys: list[str] = list()
+        current_counts: list[int] = list()
         direction_generator = self.yield_direction()
-        done = lambda x: all([x.endswith("Z") for x in current])
+        done = lambda x: all([x.endswith("Z") for x in current_keys])
         for key in self.mapping:
             if key.endswith("A"):
-                current.append(key)
-        while done(current) == False:
+                current_keys.append(key)
+                current_counts.append(0)
+        while not done(current_keys):
             next_side = next(direction_generator)
-            for i in range(len(current)):
-                current[i] = self.mapping[current[i]][next_side]
-            count += 1
-        return count
+            for i, key in enumerate(current_keys):
+                if key.endswith("Z"):
+                    continue
+                current_keys[i] = self.mapping[current_keys[i]][next_side]
+                current_counts[i] += 1
+        return math.lcm(*current_counts)
 
     def yield_direction(self) -> Iterator[int]:
         i = 0
