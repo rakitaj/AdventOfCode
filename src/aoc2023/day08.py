@@ -23,6 +23,7 @@ class Navigator:
         return count
 
     def path2(self) -> int:
+        """This is solved using the least common multiple math technique."""
         current_keys: list[str] = list()
         current_counts: list[int] = list()
         direction_generator = self.yield_direction()
