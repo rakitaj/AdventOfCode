@@ -1,6 +1,6 @@
 import re
 
-integer_pattern = re.compile(r"(\d+)")
+integer_pattern = re.compile(r"(-?\d+)")
 
 
 def extract_integer(string: str) -> int | None:
