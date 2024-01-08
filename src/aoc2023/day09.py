@@ -35,6 +35,13 @@ def next_in_sequence(derivatives_list: list[list[int]]) -> list[list[int]]:
     return derivatives_list
 
 
+def previous_in_sequence(derivatives_list: list[list[int]]) -> list[list[int]]:
+    for i in range(len(derivatives_list) - 2, -1, -1):
+        n = derivatives_list[i][0] - derivatives_list[i + 1][0]
+        derivatives_list[i].insert(0, n)
+    return derivatives_list
+
+
 class Day09Answers(Answers):
     def __init__(self):
         loader = DataLoader(2023, "day09.txt")
@@ -50,4 +57,9 @@ class Day09Answers(Answers):
         return str(total)
 
     def part2(self) -> str:
-        return super().part2()
+        total = 0
+        for i, line in enumerate(self.data):
+            derivatives = derivative_all(numbers=line)
+            derivateves_prev = previous_in_sequence(derivatives)
+            total += derivateves_prev[0][0]
+        return str(total)
