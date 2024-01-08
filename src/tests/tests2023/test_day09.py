@@ -1,5 +1,5 @@
 import pytest
-from src.aoc2023.day09 import derivative, derivative_all, parse, next_in_sequence, sum_all
+from src.aoc2023.day09 import derivative, derivative_all, parse, next_in_sequence
 
 sample_data = """0 3 6 9 12 15
 1 3 6 10 15 21
@@ -23,4 +23,4 @@ def test_next_in_sequence(i: int, expected: int):
     num_lines = parse(sample_data)
     derivatives = derivative_all(numbers=num_lines[i])
     derivateves_next = next_in_sequence(derivatives)
-    assert derivateves_next[i][-1] == expected
+    assert derivateves_next[0][-1] == expected

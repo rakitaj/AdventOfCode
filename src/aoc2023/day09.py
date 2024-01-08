@@ -28,29 +28,11 @@ def parse(lines: Sequence[str]) -> list[list[int]]:
     return num_lines
 
 
-# def next_in_sequence(derivatives_list: list[list[int]]) -> int:
-#     # result: list[int] = list()
-#     # for i in range(0, len(derivatives_list) - 1):
-#     #     n = derivatives_list[i][-1] + derivatives_list[i + 1][-1]
-#     #     result.append(n)
-#     # return result
-#     return derivatives_list[0][-1] + derivatives_list[1][-1]
-
-
 def next_in_sequence(derivatives_list: list[list[int]]) -> list[list[int]]:
-    for i in range(0, len(derivatives_list) - 1):
+    for i in range(len(derivatives_list) - 2, -1, -1):
         n = derivatives_list[i][-1] + derivatives_list[i + 1][-1]
         derivatives_list[i].append(n)
     return derivatives_list
-
-
-def sum_all(lines: list[list[int]]) -> list[int]:
-    all_next_numbers: list[int] = list()
-    for line in lines:
-        derivatives = derivative_all(line)
-        n = next_in_sequence(derivatives)
-        all_next_numbers.append(n)
-    return all_next_numbers
 
 
 class Day09Answers(Answers):
@@ -60,8 +42,12 @@ class Day09Answers(Answers):
         self.data = parse(raw_data)
 
     def part1(self) -> str:
-        all_next_numbers = sum_all(self.data)
-        return str(sum(all_next_numbers))
+        total = 0
+        for i, line in enumerate(self.data):
+            derivatives = derivative_all(numbers=line)
+            derivateves_next = next_in_sequence(derivatives)
+            total += derivateves_next[0][-1]
+        return str(total)
 
     def part2(self) -> str:
         return super().part2()
