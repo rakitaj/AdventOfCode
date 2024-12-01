@@ -1,7 +1,7 @@
 import os
 from abc import ABC, abstractmethod
 from pathlib import Path
-
+from src.common.parsing import extract_integers
 
 class DataLoader:
     def __init__(self, year: int, filename: str):
@@ -18,6 +18,16 @@ class DataLoader:
             if trim_newlines:
                 lines = [line.strip() for line in lines]
             return lines
+        
+    def readlines_ints(self) -> list[list[int]]:
+        with open(self.filepath, "r") as fp:
+            lines = fp.readlines()
+            integers: list[list[int]] = list()
+            for line in lines:
+                ints = extract_integers(line)
+                if ints is not None:
+                    integers.append(ints)
+            return integers
 
     def read(self) -> str:
         with open(self.filepath, "r") as fp:

@@ -1,6 +1,5 @@
-import pytest
 
-from src.aoc2023.day08 import Navigator, parse
+from src.aoc2023.day08 import parse
 
 
 def test_navigate_simple_path():
