@@ -1,5 +1,6 @@
-from src.common.dataload import Answers, DataLoader
 from functools import reduce
+
+from src.common.dataload import Answers, DataLoader
 
 
 def load_and_parse() -> list[str]:
@@ -25,7 +26,7 @@ class Day01Answers(Answers):
         left, right = split_to_left_and_right(self.data)
         left_sorted = sorted(left)
         right_sorted = sorted(right)
-        paired_data = zip(left_sorted, right_sorted)
+        paired_data = zip(left_sorted, right_sorted, strict=False)
         total = reduce(lambda acc, x: acc + abs(x[0] - x[1]), paired_data, 0)
         return str(total)
 

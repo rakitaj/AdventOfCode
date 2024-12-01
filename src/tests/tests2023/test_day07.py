@@ -1,5 +1,5 @@
 import pytest
-
+from typing import Callable
 from src.aoc2023.day07 import (
     Hand,
     HandType,
@@ -8,7 +8,7 @@ from src.aoc2023.day07 import (
     parse_to_hand_2,
 )
 
-part_1_strategy = lambda x: x.CARD_RANK
+part_1_strategy: Callable[[Hand], list[str]] = lambda x: x.CARD_RANK
 
 
 @pytest.mark.parametrize(
@@ -92,7 +92,7 @@ JJJAK 2""".splitlines()
     "parse_func, expected",
     [(parse_to_hand, 6592), (parse_to_hand_2, 6839)],
 )
-def test_compute_both_parts(parse_func, expected: int):
+def test_compute_both_parts(parse_func: Callable[[str], Hand], expected: int):
     lines = """2345A 1
 Q2KJJ 13
 Q2Q2Q 19

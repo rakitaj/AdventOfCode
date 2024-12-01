@@ -43,9 +43,9 @@ def test_point_equality_different_types() -> None:
 
 def test_point_gt_lt_should_raise() -> None:
     with pytest.raises(TypeError):
-        Point(0, 0) < Point(5, 5)  # type: ignore
+        assert Point(0, 0) < Point(5, 5)  # type: ignore
     with pytest.raises(TypeError):
-        Point(0, 0) > Point(5, 5)  # type: ignore
+        assert Point(0, 0) > Point(5, 5)  # type: ignore
 
 
 def test_point_add() -> None:

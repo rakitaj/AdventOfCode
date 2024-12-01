@@ -1,3 +1,5 @@
+# ruff: noqa: I001
+
 from src.common.dataload import Answers
 import src.aoc2023.day01
 import src.aoc2023.day02
