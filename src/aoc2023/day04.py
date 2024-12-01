@@ -18,7 +18,7 @@ def card_points(winning_nums: set[int], card_nums: set[int]) -> int:
     num_winning = len(intersection)
     if num_winning == 0:
         return 0
-    return 1 * (2 ** (num_winning - 1))
+    return 1 * (2 ** (num_winning - 1)) 
 
 
 def cards_won(card_id: int, set1: set[int], set2: set[int]) -> list[int]:
@@ -50,7 +50,7 @@ def cards_won_algorithm(lines: Sequence[str]) -> list[int]:
 
 
 class Day04Answers(Answers):
-    def __init__(self):
+    def __init__(self) -> None:
         loader = DataLoader(2023, "day04.txt")
         self.data = loader.readlines_str()
 

@@ -118,7 +118,7 @@ def test_extract_integer(string: str, expected: int):
 
 
 @pytest.mark.parametrize("string, expected", [("seeds: 79 14 55 13", [79, 14, 55, 13])])
-def test_extract_integers(string: str, expected: int):
+def test_extract_integers(string: str, expected: list[int]):
     actual = extract_integers(string)
     assert actual == expected
 

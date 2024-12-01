@@ -63,7 +63,7 @@ def parse(lines: Sequence[str]) -> Navigator:
 
 
 class Day08Answers(Answers):
-    def __init__(self):
+    def __init__(self) -> None:
         loader = DataLoader(2023, "day08.txt")
         self.data = loader.readlines_str()
 

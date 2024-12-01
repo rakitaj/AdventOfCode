@@ -43,7 +43,7 @@ def test_cards_won(card_id: int, set1: set[int], set2: set[int], expected: list[
         )
     ],
 )
-def test_parse_line(line: str, game_id: str, set1: set[int], set2: set[int]):
+def test_parse_line(line: str, game_id: int, set1: set[int], set2: set[int]):
     parsed_game_id, parsed_set1, parsed_set2 = parse_line(line)
     assert parsed_game_id == game_id
     assert parsed_set1 == set1

@@ -26,8 +26,10 @@ class Hand:
     CARD_RANK = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
     CARD_RANK_2 = ["J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"]
 
-    def __eq__(self, other: Hand) -> bool:
+    def __eq__(self, other: object) -> bool:
+        
         return (
+            isinstance(other, Hand) and
             (self.hand_type == other.hand_type)
             and (self.contents == other.contents)
             and (self.rank_strategy(self) == other.rank_strategy(self))
@@ -126,14 +128,14 @@ def calcuate_answer(lines: Sequence[str], parse_func: Callable[[str], Hand]) -> 
 
 
 class Day07Answers(Answers):
-    def __init__(self):
+    def __init__(self) -> None:
         loader = DataLoader(2023, "day07.txt")
         self.data = loader.readlines_str()
 
-    def part1(self) -> int:
+    def part1(self) -> str:
         answer = calcuate_answer(self.data, parse_to_hand)
-        return answer
+        return str(answer)
 
-    def part2(self) -> int:
+    def part2(self) -> str:
         answer = calcuate_answer(self.data, parse_to_hand_2)
-        return answer
+        return str(answer)

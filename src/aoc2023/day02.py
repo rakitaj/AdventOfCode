@@ -62,7 +62,7 @@ class Day02Answers(Answers):
         loader = DataLoader(2023, "day02.txt")
         self.data = loader.readlines_str()
 
-    def part1(self) -> int:
+    def part1(self) -> str:
         total = 0
         predicate = CubeCounts(12, 13, 14)
         for line in self.data:
@@ -70,12 +70,12 @@ class Day02Answers(Answers):
             if parse_and_test_line(line, predicate):
                 assert game_id_match is not None
                 total += int(game_id_match.group(1))
-        return total
+        return str(total)
 
-    def part2(self) -> int:
+    def part2(self) -> str:
         total = 0
         for line in self.data:
             min_cubes = min_cubes_line(line)
             power = min_cubes.blue * min_cubes.green * min_cubes.red
             total += power
-        return total
+        return str(total)
