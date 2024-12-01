@@ -1,4 +1,3 @@
-
 from src.aoc2023.day08 import parse
 
 

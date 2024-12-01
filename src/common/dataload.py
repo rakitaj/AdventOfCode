@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from src.common.parsing import extract_integers
 
+
 class DataLoader:
     def __init__(self, year: int, filename: str):
         self.filename = filename
@@ -18,7 +19,7 @@ class DataLoader:
             if trim_newlines:
                 lines = [line.strip() for line in lines]
             return lines
-        
+
     def readlines_ints(self) -> list[list[int]]:
         with open(self.filepath, "r") as fp:
             lines = fp.readlines()

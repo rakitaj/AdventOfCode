@@ -29,10 +29,9 @@ class Hand:
     CARD_RANK_2 = ["J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"]
 
     def __eq__(self, other: object) -> bool:
-        
         return (
-            isinstance(other, Hand) and
-            (self.hand_type == other.hand_type)
+            isinstance(other, Hand)
+            and (self.hand_type == other.hand_type)
             and (self.contents == other.contents)
             and (self.rank_strategy(self) == other.rank_strategy(self))
         )

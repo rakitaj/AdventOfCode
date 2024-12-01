@@ -1,9 +1,11 @@
 from src.common.dataload import Answers, DataLoader
 from functools import reduce
 
+
 def load_and_parse() -> list[str]:
     loader = DataLoader(2024, "day01.txt")
     return loader.readlines_str()
+
 
 def split_to_left_and_right(lines: list[str]) -> tuple[list[int], list[int]]:
     left: list[int] = []
@@ -12,7 +14,8 @@ def split_to_left_and_right(lines: list[str]) -> tuple[list[int], list[int]]:
         l, r = line.split()
         left.append(int(l.strip()))
         right.append(int(r.strip()))
-    return (left, right) 
+    return (left, right)
+
 
 class Day01Answers(Answers):
     def __init__(self) -> None:
@@ -23,7 +26,7 @@ class Day01Answers(Answers):
         left_sorted = sorted(left)
         right_sorted = sorted(right)
         paired_data = zip(left_sorted, right_sorted)
-        total = reduce(lambda acc, x: acc + abs(x[0]-x[1]), paired_data, 0)
+        total = reduce(lambda acc, x: acc + abs(x[0] - x[1]), paired_data, 0)
         return str(total)
 
     def part2(self) -> str:
