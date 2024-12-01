@@ -61,7 +61,7 @@ def _part02_answer(strings: Sequence[str]) -> int:
 
 
 class Day01Answers(Answers):
-    def __init__(self):
+    def __init__(self) -> None:
         self.data = load_and_parse()
 
     def part1(self) -> str:

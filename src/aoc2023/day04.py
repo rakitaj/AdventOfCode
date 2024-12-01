@@ -16,9 +16,11 @@ def parse_line(line: str) -> tuple[int, set[int], set[int]]:
 def card_points(winning_nums: set[int], card_nums: set[int]) -> int:
     intersection = winning_nums.intersection(card_nums)
     num_winning = len(intersection)
-    if num_winning == 0:
+    if num_winning <= 0:
         return 0
-    return 1 * (2 ** (num_winning - 1)) 
+    result = 1 * (2 ** (num_winning - 1))
+    assert type(result) == int
+    return result
 
 
 def cards_won(card_id: int, set1: set[int], set2: set[int]) -> list[int]:

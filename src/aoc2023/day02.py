@@ -58,7 +58,7 @@ def min_cubes_line(line: str) -> CubeCounts:
 
 
 class Day02Answers(Answers):
-    def __init__(self):
+    def __init__(self) -> None:
         loader = DataLoader(2023, "day02.txt")
         self.data = loader.readlines_str()
 
