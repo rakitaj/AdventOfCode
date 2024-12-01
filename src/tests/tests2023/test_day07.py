@@ -1,9 +1,10 @@
 import pytest
+
 from src.aoc2023.day07 import (
     Hand,
     HandType,
-    parse_to_hand,
     calcuate_answer,
+    parse_to_hand,
     parse_to_hand_2,
 )
 

@@ -1,5 +1,6 @@
 import pytest
-from src.aoc2023.day03 import part_numbers, symbol_adjacent, part_numbers_all_lines, gear_numbers
+
+from src.aoc2023.day03 import gear_numbers, part_numbers, part_numbers_all_lines, symbol_adjacent
 
 sample_data = """467..114..
 ...*......

@@ -1,4 +1,5 @@
 import pytest
+
 from src.aoc2023.day05 import OffsetMapping, parse
 
 test_data = """seeds: 79 14 55 13

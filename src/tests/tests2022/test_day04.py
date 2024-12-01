@@ -1,4 +1,5 @@
 import pytest
+
 from src.aoc2022.day04 import SegmentLocations
 
 

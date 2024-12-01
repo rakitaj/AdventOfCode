@@ -1,7 +1,8 @@
-from src.common.dataload import DataLoader, Answers
-from src.common.parsing import extract_integer
-from src.common.extensions import must
 from typing import Sequence
+
+from src.common.dataload import Answers, DataLoader
+from src.common.extensions import must
+from src.common.parsing import extract_integer
 
 
 def parse_line(line: str) -> tuple[int, set[int], set[int]]:

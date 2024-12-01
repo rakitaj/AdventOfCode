@@ -1,6 +1,7 @@
 import pytest
-from src.common.grid import Point
+
 from src.aoc2022.day14 import parse_line
+from src.common.grid import Point
 
 
 @pytest.mark.parametrize(

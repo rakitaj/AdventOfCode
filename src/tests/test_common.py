@@ -1,8 +1,9 @@
 import pytest
-from src.common.extensions import single, flatten
+
+from src.common.equations import quadratic
+from src.common.extensions import flatten, single
 from src.common.grid import Grid, Point, points_between
 from src.common.parsing import extract_integer, extract_integers
-from src.common.equations import quadratic
 
 small_grid_input = """1 2 3
 4 5 6

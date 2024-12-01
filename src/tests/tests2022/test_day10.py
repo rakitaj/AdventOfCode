@@ -1,5 +1,6 @@
 import pytest
-from src.aoc2022.day10 import parse_data, NoOp, AddX, CPUEmulator
+
+from src.aoc2022.day10 import AddX, CPUEmulator, NoOp, parse_data
 
 data = """noop
 addx 3

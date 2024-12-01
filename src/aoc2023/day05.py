@@ -1,8 +1,9 @@
-from src.common.parsing import extract_integers
-from src.common.extensions import must
 from dataclasses import dataclass
 from typing import Sequence
-from src.common.dataload import DataLoader, Answers
+
+from src.common.dataload import Answers, DataLoader
+from src.common.extensions import must
+from src.common.parsing import extract_integers
 
 
 def is_empty_or_whitespace(string: str) -> bool:

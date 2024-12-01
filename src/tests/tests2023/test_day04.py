@@ -1,5 +1,6 @@
 import pytest
-from src.aoc2023.day04 import card_points, parse_line, cards_won, cards_won_algorithm
+
+from src.aoc2023.day04 import card_points, cards_won, cards_won_algorithm, parse_line
 
 
 @pytest.mark.parametrize(

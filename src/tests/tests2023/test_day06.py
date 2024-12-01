@@ -1,4 +1,4 @@
-from src.aoc2023.day06 import calculate_how_to_win, calculate_how_to_win_math, BoatRace
+from src.aoc2023.day06 import BoatRace, calculate_how_to_win, calculate_how_to_win_math
 
 
 def test_calculate_how_to_win():

@@ -1,8 +1,9 @@
-from src.common.dataload import DataLoader
 import re
-from dataclasses import dataclass
 from collections import deque
+from dataclasses import dataclass
 from typing import Sequence
+
+from src.common.dataload import DataLoader
 
 
 @dataclass

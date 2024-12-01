@@ -1,7 +1,7 @@
 import re
 from dataclasses import dataclass
-from src.common.dataload import DataLoader, Answers
 
+from src.common.dataload import Answers, DataLoader
 
 # "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green"
 game_pattern = re.compile(r"Game (\d+)")

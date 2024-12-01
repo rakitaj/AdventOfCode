@@ -1,5 +1,5 @@
+from src.aoc2022.day08 import FloodFillTrees, visible_trees
 from src.common.grid import Grid
-from src.aoc2022.day08 import visible_trees, FloodFillTrees
 
 tiny_data = """30373
 25512

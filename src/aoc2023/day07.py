@@ -1,9 +1,11 @@
 from __future__ import annotations
-from typing import Sequence, Callable
-from enum import IntEnum
-from dataclasses import dataclass
+
 from collections import Counter
-from src.common.dataload import DataLoader, Answers
+from dataclasses import dataclass
+from enum import IntEnum
+from typing import Callable, Sequence
+
+from src.common.dataload import Answers, DataLoader
 
 
 class HandType(IntEnum):

@@ -1,5 +1,7 @@
 from __future__ import annotations
-from typing import cast, Sequence
+
+from typing import Sequence, cast
+
 import parse
 
 from src.common.dataload import DataLoader

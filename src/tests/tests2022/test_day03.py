@@ -1,4 +1,5 @@
 import pytest
+
 from src.aoc2022.day03 import priority, priority_of_backpack
 
 

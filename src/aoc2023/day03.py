@@ -1,6 +1,7 @@
-from typing import Sequence
-from src.common.dataload import DataLoader, Answers
 import re
+from typing import Sequence
+
+from src.common.dataload import Answers, DataLoader
 
 pattern_numbers = re.compile(r"(\d+)")
 

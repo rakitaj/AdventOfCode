@@ -1,5 +1,6 @@
 from typing import Sequence
-from src.common.dataload import DataLoader, Answers
+
+from src.common.dataload import Answers, DataLoader
 
 digits = {
     "one": 1,

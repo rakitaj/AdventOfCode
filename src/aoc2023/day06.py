@@ -1,7 +1,8 @@
 import math
-from src.common.equations import quadratic
-from src.common.dataload import DataLoader, Answers
 from dataclasses import dataclass
+
+from src.common.dataload import Answers, DataLoader
+from src.common.equations import quadratic
 
 
 @dataclass

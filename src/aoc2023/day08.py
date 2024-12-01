@@ -1,8 +1,9 @@
-from src.common.dataload import DataLoader, Answers
-from typing import Sequence, Iterator
-from dataclasses import dataclass
-import re
 import math
+import re
+from dataclasses import dataclass
+from typing import Iterator, Sequence
+
+from src.common.dataload import Answers, DataLoader
 
 word_pattern = re.compile(r"(\w+)")
 

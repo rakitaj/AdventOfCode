@@ -1,7 +1,7 @@
 import pytest
-from src.common.grid import Grid, Point
-from src.aoc2022.day12 import find_start, find_end, find_path, find_path_bfs
 
+from src.aoc2022.day12 import find_end, find_path, find_path_bfs, find_start
+from src.common.grid import Grid, Point
 
 small_data = """Sabqponm
 abcryxxl
