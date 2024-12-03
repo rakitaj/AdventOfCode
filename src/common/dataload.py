@@ -19,6 +19,15 @@ class DataLoader:
                 lines = [line.strip() for line in lines]
             return lines
 
+    def readlines_int(self) -> list[list[int]]:
+        result = list()
+        with open(self.filepath, "r") as fp:
+            lines = fp.readlines()
+            for line in lines:
+                integers = [int(x) for x in line.split()]
+                result.append(integers)
+        return result
+
     def read(self) -> str:
         with open(self.filepath, "r") as fp:
             return fp.read()

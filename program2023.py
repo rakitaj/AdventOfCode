@@ -1,5 +1,13 @@
 from src.common.dataload import Answers
-import src.aoc2024.day01
+import src.aoc2023.day01
+import src.aoc2023.day02
+import src.aoc2023.day03
+import src.aoc2023.day04
+import src.aoc2023.day05
+import src.aoc2023.day06
+import src.aoc2023.day07
+import src.aoc2023.day08
+import src.aoc2023.day09
 
 for answers in Answers.__subclasses__():
     day = answers.__module__.split(".")[-1]
