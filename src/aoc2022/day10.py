@@ -80,7 +80,7 @@ def parse_data(lines: Sequence[str]) -> list[Instruction]:
         if len(parts) == 1:
             result.append(NoOp())
         else:
-            op, num = parts
+            _op, num = parts
             result.append(AddX(int(num)))
     return result
 

@@ -8,7 +8,7 @@ def single[T](iterable: Collection[T]) -> T:
         return iterable.__iter__().__next__()
 
 
-def flatten[T](array: Sequence[T]) -> list[T]:
+def flatten[T](array: Sequence[T] | Sequence[Sequence[T]]) -> list[T]:
     result: list[T] = []
     for e in array:
         if isinstance(e, list):

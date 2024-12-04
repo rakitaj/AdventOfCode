@@ -37,7 +37,7 @@ class Cave:
 
 
 def parse_line(line: str) -> list[Point]:
-    result = list()
+    result: list[Point] = list()
     split_on_arrow = line.split("->")
     for part in split_on_arrow:
         x, y = part.split(",")

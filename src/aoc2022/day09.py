@@ -19,6 +19,8 @@ def tail_visited_once(instructions: list[tuple[str, int]]) -> int:
                     head.y += 1
                 case "D":
                     head.y -= 1
+                case _:
+                    raise ValueError(f"Value [{direction}] out of range")
             tail = update_tail(head, tail)
             visited.add(tail.to_tuple())
     return len(visited)
@@ -34,11 +36,13 @@ def update_tail(head: Point, tail: Point) -> Point:
         case -2 | 2 as x, -1 | 0 | 1 as y:
             tail.x = tail.x + (x // 2)
             tail.y += y
+        case _:
+            raise ValueError(f"Match case out of range [{diffx},{diffy}]")
     return tail
 
 
 def parse_data(lines: Sequence[str]) -> list[tuple[str, int]]:
-    instructions = list()
+    instructions: list[tuple[str, int]] = list()
     for line in lines:
         direction, magnitue = line.split()
         instructions.append((direction, int(magnitue)))

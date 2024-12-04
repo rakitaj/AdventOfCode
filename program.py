@@ -1,7 +1,5 @@
-# ruff: noqa: I001
-
 from src.common.dataload import Answers
-import src.aoc2024.day01
+from src.aoc2024 import *
 
 for answers in Answers.__subclasses__():
     day = answers.__module__.split(".")[-1]

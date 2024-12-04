@@ -49,6 +49,8 @@ def parse_op(line: str) -> Callable[[int], int]:
             return lambda x: int(left_expr) + int(right_expr)
         case [left_expr, "*", right_expr]:
             return lambda x: int(left_expr) * int(right_expr)
+        case _:
+            raise ValueError(f"Values left_expr,op,right_expr [{left_expr},{op},{right_expr}]")
     raise ValueError("Can't parse the operation line")
 
 

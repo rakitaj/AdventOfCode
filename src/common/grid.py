@@ -35,7 +35,7 @@ class Point:
 
 def points_between(p0: Point, p1: Point) -> list[Point]:
     diff: Point = p1 - p0
-    points = list()
+    points: list[Point] = list()
     if diff.x > 0:
         for i in range(diff.x + 1):
             points.append(Point(p0.x + i, p0.y))
@@ -104,7 +104,7 @@ class Grid[T]:
         return None
 
     def find_all(self, target: T) -> list[tuple[int, int]]:
-        result = list()
+        result: list[tuple[int, int]] = list()
         for i, e in enumerate(self.g):
             if e == target:
                 y = i // self.x_size
