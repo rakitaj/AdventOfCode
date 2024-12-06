@@ -26,4 +26,4 @@ class Day02Answers(Answers):
         return str(total)
     
     def part2(self) -> str:
-        return super().part2()
+        return ""

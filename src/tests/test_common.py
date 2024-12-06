@@ -1,6 +1,6 @@
 import pytest
 
-from src.common.equations import quadratic
+from src.common.equations import quadratic, binary_permutations
 from src.common.extensions import flatten, single
 from src.common.grid import Grid, Point, points_between
 from src.common.parsing import extract_integer, extract_integers
@@ -128,3 +128,7 @@ def test_extract_integers(string: str, expected: list[int]):
 def test_quadratic_equation_solver(a: int, b: int, c: int, expected: tuple[int, int]):
     root1, root2 = quadratic(a, b, c)
     assert {root1, root2} == set(expected)
+
+def test_binary_permutations():
+    result = binary_permutations(4)
+    assert len(result) == 16
