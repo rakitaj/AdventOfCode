@@ -32,6 +32,10 @@ class Point:
             return Point(self.x - other.x, self.y - other.y)
         raise TypeError(f"Can only subtract types of Point. The argument passed is type {type(other)}.")
 
+    def __mul__(self, scalar: object) -> Point:
+        if isinstance(scalar, int):
+            return Point(self.x * scalar, self.y * scalar)
+        raise TypeError(f"Can only multiply by an interger. The argument passed is type {type(scalar)}.")
 
 def points_between(p0: Point, p1: Point) -> list[Point]:
     diff: Point = p1 - p0
@@ -112,22 +116,9 @@ class Grid[T]:
                 result.append((x, y))
         return result
 
-    def moves(self, x: int, y: int) -> list[tuple[int, int]]:
-        valid_moves: list[tuple[int, int]] = list()
-        potential_moves = [
-            (x - 1, y + 1),
-            (x - 1, y),
-            (x - 1, y - 1),
-            (x, y + 1),
-            (x, y - 1),
-            (x + 1, y + 1),
-            (x + 1, y),
-            (x + 1, y - 1),
-        ]
-        for move in potential_moves:
-            if self.try_get(move[0], move[1]) is True:
-                valid_moves.append(move)
-        return valid_moves
+    @staticmethod
+    def moves() -> list[tuple[int, int]]:
+        return [(0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)]
 
     def moves_cardinal(self, x: int, y: int) -> list[tuple[int, int]]:
         valid_moves: list[tuple[int, int]] = list()

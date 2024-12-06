@@ -129,6 +129,7 @@ def test_quadratic_equation_solver(a: int, b: int, c: int, expected: tuple[int, 
     root1, root2 = quadratic(a, b, c)
     assert {root1, root2} == set(expected)
 
+
 def test_binary_permutations():
     result = binary_permutations(4)
     assert len(result) == 16

@@ -5,7 +5,7 @@
         "**/.mypy_cache": true,
         ".pytest_cache": true
     },
-    "python.analysis.typeCheckingMode": "standard",
+    "python.analysis.typeCheckingMode": "strict",
     "python.analysis.diagnosticMode": "workspace",
     "python.languageServer": "Pylance",
     "[python]": {

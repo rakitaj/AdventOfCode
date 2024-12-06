@@ -37,7 +37,7 @@ def update_tail(head: Point, tail: Point) -> Point:
             tail.x = tail.x + (x // 2)
             tail.y += y
         case _:
-            pass # Not an error so don't raise.
+            pass  # Not an error so don't raise.
     return tail
 
 
