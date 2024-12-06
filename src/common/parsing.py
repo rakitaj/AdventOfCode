@@ -10,7 +10,7 @@ def extract_integer(string: str) -> int | None:
     return None
 
 
-def extract_integers(string: str) -> list[int] | None:
+def extract_integers(string: str) -> list[int]:
     matches = integer_pattern.findall(string)
     integers = [int(m) for m in matches]
     return integers

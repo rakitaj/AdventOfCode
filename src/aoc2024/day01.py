@@ -1,34 +1,36 @@
-from functools import reduce
-
 from src.common.dataload import Answers, DataLoader
+from collections import Counter
 
 
-def load_and_parse() -> list[str]:
-    loader = DataLoader(2024, "day01.txt")
-    return loader.readlines_str()
-
-
-def split_to_left_and_right(lines: list[str]) -> tuple[list[int], list[int]]:
-    left: list[int] = []
-    right: list[int] = []
+def partition_data(lines: list[list[int]]) -> tuple[list[int], list[int]]:
+    left = []
+    right = []
     for line in lines:
-        l, r = line.split()
-        left.append(int(l.strip()))
-        right.append(int(r.strip()))
+        left.append(line[0])
+        right.append(line[1])
     return (left, right)
 
 
 class Day01Answers(Answers):
-    def __init__(self) -> None:
-        self.data = load_and_parse()
+
+    def __init__(self):
+        loader = DataLoader(2024, "day01.txt")
+        self.data = loader.readlines_int()
 
     def part1(self) -> str:
-        left, right = split_to_left_and_right(self.data)
+        total = 0
+        left, right = partition_data(self.data)
         left_sorted = sorted(left)
         right_sorted = sorted(right)
-        paired_data = zip(left_sorted, right_sorted, strict=False)
-        total = reduce(lambda acc, x: acc + abs(x[0] - x[1]), paired_data, 0)
+        combined_sorted_data = zip(left_sorted, right_sorted)
+        for l, r in combined_sorted_data:
+            total += abs(l - r)
         return str(total)
 
     def part2(self) -> str:
-        return "hi"
+        total = 0
+        left, right = partition_data(self.data)
+        right_counts = Counter(right)
+        for num in left:
+            total += num * right_counts.get(num, 0)
+        return str(total)
