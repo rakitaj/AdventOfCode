@@ -12,9 +12,7 @@ def find_sequence_8_directions(grid: Grid[str], point: Point, sequence: list[str
     return found_count
 
 
-def _find_sequence_one_direction(
-    grid: Grid[str], start: Point, sequence: list[str], transform: tuple[int, int]
-) -> bool:
+def _find_sequence_one_direction(grid: Grid[str], start: Point, sequence: list[str], transform: tuple[int, int]) -> bool:
     for i, e in enumerate(sequence):
         # Consider i the scaling factor of the transform.
         p = Point(start.x + transform[0] * i, start.y + transform[1] * i)
