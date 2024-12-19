@@ -17,7 +17,7 @@ def test_single() -> None:
 
 
 def test_grid() -> None:
-    grid = Grid.from_lines(small_grid_input, lambda x: int(x))
+    grid: Grid[int] = Grid.from_lines(small_grid_input, lambda x: int(x))
     assert grid.get(0, 0) == 1
     assert grid.get(1, 0) == 2
     assert grid.get(1, 2) == 8
@@ -59,6 +59,12 @@ def test_point_subtract() -> None:
     p2 = Point(12, 4)
     assert p1 - p2 == Point(-2, 1)
 
+def test_grid_yield_all_points():
+    points: list[Point] = list()
+    grid: Grid[int] = Grid.from_lines(small_grid_input, lambda x: int(x))
+    for p in grid.iter_points():
+        points.append(p)
+    assert len(points) == 9
 
 @pytest.mark.parametrize("target, expected", [(1, (0, 0)), (4, (0, 1)), (10, None)])
 def test_find(target: int, expected: tuple[int, int] | None) -> None:

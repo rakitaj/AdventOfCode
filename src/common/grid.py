@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Callable, Sequence
+from typing import Callable, Sequence, Iterator
 
 
 class Point:
@@ -115,6 +115,12 @@ class Grid[T]:
                 x = i % self.x_size
                 result.append((x, y))
         return result
+
+    def iter_points(self) -> Iterator[Point]:
+        for i in range(len(self.g)):
+            y = i // self.x_size
+            x = i % self.x_size
+            yield Point(x, y)
 
     @staticmethod
     def moves() -> list[tuple[int, int]]:
