@@ -23,7 +23,6 @@ def is_within_tolerance_damped(numbers: list[int]) -> bool:
 
 
 class Day02Answers(Answers):
-
     def __init__(self) -> None:
         dataloader = DataLoader(2024, "day02.txt")
         self.data = dataloader.readlines_int()

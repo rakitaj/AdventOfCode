@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Callable, Sequence, Iterator
+from enum import Enum
 
 
 class Point:
@@ -36,6 +37,7 @@ class Point:
         if isinstance(scalar, int):
             return Point(self.x * scalar, self.y * scalar)
         raise TypeError(f"Can only multiply by an interger. The argument passed is type {type(scalar)}.")
+
 
 def points_between(p0: Point, p1: Point) -> list[Point]:
     diff: Point = p1 - p0
@@ -181,3 +183,12 @@ class Distances:
         self.down = 0
         self.left = 0
         self.right = 0
+
+
+class Direction(Enum):
+    UP = 1
+    RIGHT = 2
+    DOWN = 3
+    LEFT = 4
+
+    

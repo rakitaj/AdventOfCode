@@ -1,12 +1,7 @@
 from __future__ import annotations
-
 from typing import Sequence, cast
-
-import parse
-
 from src.common.dataload import DataLoader
-
-lex_file = parse.compile("{filesize} {filename}")
+import re
 
 
 class DirNode:
@@ -80,12 +75,10 @@ def lex_instruction(instruction: str, line_number: int) -> tuple[str, str, str, 
     elif instruction.startswith("dir"):
         return ("contents", "dir", instruction[4:], line_number)
     else:
-        lex_file_result = lex_file.parse(instruction)
-        if lex_file_result is None:
-            raise ValueError(f"Tried to lex/tokenize filename {instruction} and failed.")
-        assert type(lex_file_result) is parse.Result
-        filename = cast(str, lex_file_result["filename"])
-        filesize = cast(str, lex_file_result["filesize"])
+        matches = re.search(r"(\d+) (.*)", instruction)
+        assert matches is not None
+        filesize = matches.group(1)
+        filename = matches.group(2)
         return ("contents", filename, filesize, line_number)
 
 

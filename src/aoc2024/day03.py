@@ -39,7 +39,6 @@ def multiply_line_conditional(line: str) -> int:
 
 
 class Day03Answers(Answers):
-
     def __init__(self) -> None:
         loader = DataLoader(2024, "day03.txt")
         self.lines = loader.readlines_str()

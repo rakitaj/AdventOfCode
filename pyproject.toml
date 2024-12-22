@@ -4,7 +4,7 @@ version = "0.4.0"
 description = "Advent of Code"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = ["mypy", "pytest", "parse", "ruff", "pipe"]
+dependencies = ["mypy", "pytest", "ruff", "pipe", "requests"]
 
 [tool.mypy]
 warn_return_any = true
