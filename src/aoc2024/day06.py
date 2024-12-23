@@ -1,6 +1,7 @@
 from src.common.dataload import DataLoader, Answers
 from src.common.grid import Grid, Direction
 
+
 class Day06Answers(Answers):
 
     def __init__(self) -> None:
@@ -9,18 +10,25 @@ class Day06Answers(Answers):
         self.grid = Grid.from_strings_no_spaces(self.lines)
 
     def part1(self) -> str:
-        visited: set[tuple[int, int]] = set()
-        start = self.grid.find("^")
-        assert start is not None
-        x, y = start
-        direction = Direction.UP
-        while self.grid.try_get(x, y):
-            next_char = self.peek(x, y, direction)
-            
-                
-        return str(len(visited))
+        # visited: set[tuple[int, int]] = set()
+        # start = self.grid.find("^")
+        # assert start is not None
+        # x, y = start
+        # direction = Direction.UP
+        # while self.grid.try_get(x, y):
+        #     visited.add((x, y))
+        #     next_char = self.peek(x, y, direction)
+        #     if next_char == "#":
+        #         direction = Direction.roate_right(direction)
+        #     x, y = self.move(x, y, direction)
+        #     print(self.grid)
+        # return str(len(visited))
+        return ""
 
-    def peek(self, x: int, y:int, direction: Direction) -> str | None:
+    def part2(self) -> str:
+        return ""
+
+    def peek(self, x: int, y: int, direction: Direction) -> str | None:
         match direction:
             case Direction.UP:
                 return self.grid.get(x, y + 1) if self.grid.try_get(x, y + 1) else None
@@ -30,3 +38,14 @@ class Day06Answers(Answers):
                 return self.grid.get(x, y - 1) if self.grid.try_get(x, y - 1) else None
             case Direction.LEFT:
                 return self.grid.get(x - 1, y) if self.grid.try_get(x - 1, y) else None
+
+    def move(self, x: int, y: int, direction: Direction) -> tuple[int, int]:
+        match direction:
+            case Direction.UP:
+                return (x, y + 1)
+            case Direction.RIGHT:
+                return (x + 1, y)
+            case Direction.DOWN:
+                return (x, y - 1)
+            case Direction.LEFT:
+                return (x - 1, y)

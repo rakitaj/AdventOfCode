@@ -191,4 +191,14 @@ class Direction(Enum):
     DOWN = 3
     LEFT = 4
 
-    
+    @staticmethod
+    def roate_right(direction: Direction) -> Direction:
+        match direction:
+            case Direction.UP:
+                return Direction.RIGHT
+            case Direction.RIGHT:
+                return Direction.DOWN
+            case Direction.DOWN:
+                return Direction.LEFT
+            case Direction.LEFT:
+                return Direction.UP

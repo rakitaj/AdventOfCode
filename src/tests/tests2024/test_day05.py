@@ -1,4 +1,4 @@
-from src.aoc2024.day05 import Day05Parsed, is_page_update_in_order
+from src.aoc2024.day05 import Day05Parsed, is_page_sorted_pessimisstic
 
 lines = """47|53
 97|13
@@ -32,5 +32,5 @@ lines = """47|53
 
 def test_known_good_line():
     parsed = Day05Parsed(lines)
-    is_in_order = is_page_update_in_order(parsed.page_updates[0], parsed.rules)
+    is_in_order = is_page_sorted_pessimisstic(parsed.page_updates[0], parsed.rules)
     assert is_in_order is True
