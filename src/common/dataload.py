@@ -1,6 +1,8 @@
 import os
 from abc import ABC, abstractmethod
 from pathlib import Path
+import timeit
+from typing import Callable, ParamSpec, TypeVar
 
 
 class DataLoader:
@@ -41,3 +43,20 @@ class Answers(ABC):
     @abstractmethod
     def part2(self) -> str:
         pass
+
+
+Param = ParamSpec("Param")
+RType = TypeVar("RType")
+
+
+def timed(func: Callable[Param, RType]) -> Callable[Param, RType]:
+    def timer_wrapper(*args: Param.args, **kwargs: Param.kwargs) -> RType:
+        start = timeit.default_timer()
+        result = func(*args, **kwargs)
+        end = timeit.default_timer()
+        milliseconds = ((end - start) * 1000) // 1
+        print(f"{milliseconds} ms duration")
+        return result
+
+    timer_wrapper.__name__ = func.__name__
+    return timer_wrapper

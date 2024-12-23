@@ -24,3 +24,10 @@ def must[T](value: T | None) -> T:
     if value is None:
         raise ValueError("Called not_null on a value which is None.")
     return value
+
+
+def indexof[T](elements: Sequence[T], value: T) -> int:
+    for i, e in enumerate(elements):
+        if e == value:
+            return i
+    return -1

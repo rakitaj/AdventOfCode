@@ -1,6 +1,7 @@
 from src.common.dataload import Answers
 from src.aoc2024 import *
 
+
 for answers in Answers.__subclasses__():
     day = answers.__module__.split(".")[-1]
     instance = answers()
