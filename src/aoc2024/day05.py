@@ -19,6 +19,23 @@ def is_page_sorted_pessimisstic(page_numbers: list[int], rules: Rules) -> bool:
     return True
 
 
+def sort_unsorted_pages(page_numbers: list[int], rules: Rules) -> list[int]:
+    ordered: list[int] = list()
+    ordered.append(page_numbers[0])
+    for page_num in page_numbers[1:]:
+        after = rules.forwards.get(page_num, set())
+        inserted = False
+        for i, ordered_page in enumerate(ordered):
+            if ordered_page in after:
+                ordered.insert(i, page_num)
+                inserted = True
+                break
+        if not inserted:
+            ordered.append(page_num)
+
+    return ordered
+
+
 class Day05Parsed:
 
     def __init__(self, lines: Sequence[str]) -> None:
@@ -49,4 +66,11 @@ class Day05Answers(Answers):
         return str(total)
 
     def part2(self) -> str:
-        return ""
+        parsed = Day05Parsed(self.lines)
+        total = 0
+        for line in parsed.page_updates:
+            if not is_page_sorted_pessimisstic(line, parsed.rules):
+                sorted = sort_unsorted_pages(line, parsed.rules)
+                midpoint = len(sorted) // 2
+                total += sorted[midpoint]
+        return str(total)
