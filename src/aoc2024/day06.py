@@ -1,6 +1,7 @@
 from typing import Sequence
-from src.common.dataload import DataLoader, Answers
+from src.common.dataload import DataLoader, Answers, timed
 from src.common.grid import Grid, Direction
+from src.common.extensions import must
 
 
 class Day06Answers(Answers):
@@ -13,6 +14,7 @@ class Day06Answers(Answers):
     def set_grid(self, lines: Sequence[str]) -> None:
         self.grid = Grid.from_strings_no_spaces(lines)
 
+    @timed
     def part1(self) -> str:
         visited: set[tuple[int, int]] = set()
         start = self.grid.find("^")
@@ -28,7 +30,36 @@ class Day06Answers(Answers):
             x, y = self.move(x, y, direction)
         return str(len(visited))
 
+    @timed
     def part2(self) -> str:
+        # total = 0
+        # for p in self.grid.iter_points():
+        #     # If we pass by the same spot going the same direction we're in a loop!
+        #     visited: set[tuple[int, int, Direction]] = set()
+        #     x, y = must(self.grid.find("^"))
+        #     direction = Direction.UP
+
+        #     # Skip the case where the blocking obstruction and guard are in the same spot.
+        #     if p.x == x and p.y == y:
+        #         continue
+        #     changed = False
+        #     if self.grid.get(p.x, p.y) == ".":
+        #         self.grid.set(p.x, p.y, "#")
+        #         changed = True
+
+        #     while self.grid.try_get(x, y):
+        #         if (x, y, direction) in visited:
+        #             total += 1
+        #             break
+        #         visited.add((x, y, direction))
+        #         next_char = self.peek(x, y, direction)
+        #         if next_char == "#":
+        #             direction = Direction.roate_right(direction)
+        #         x, y = self.move(x, y, direction)
+
+        #     if changed:
+        #         self.grid.set(p.x, p.y, ".")
+        # return str(total)
         return ""
 
     def peek(self, x: int, y: int, direction: Direction) -> str | None:
@@ -52,3 +83,6 @@ class Day06Answers(Answers):
                 return (x, y + 1)
             case Direction.LEFT:
                 return (x - 1, y)
+
+
+# 1893 - too low

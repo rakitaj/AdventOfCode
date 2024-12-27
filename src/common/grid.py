@@ -100,6 +100,10 @@ class Grid[T]:
         y_in_bounds = (0 <= y) and (y < self.y_size)
         return x_in_bounds and y_in_bounds
 
+    def set(self, x: int, y: int, value: T) -> None:
+        index = (y * self.x_size) + x
+        self.g[index] = value
+
     def find(self, target: T) -> tuple[int, int] | None:
         """Find the first occurance of the target in the grid."""
         for i, e in enumerate(self.g):

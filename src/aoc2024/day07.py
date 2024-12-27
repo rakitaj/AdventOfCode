@@ -1,3 +1,4 @@
+from typing import Callable
 from src.common.parsing import extract_integers
 from src.common.dataload import Answers, DataLoader, timed
 
@@ -8,13 +9,10 @@ def parse_line(line: str) -> tuple[int, list[int]]:
     return (int(target), nums)
 
 
-def calculator(target: int, numbers: list[int], concat: bool) -> bool:
+def calculator(target: int, numbers: list[int]) -> bool:
     start = numbers[0]
     rest = numbers[1:]
-    if concat:
-        return _calc_with_concat(target, rest, start)
-    else:
-        return _calc(target, rest, start)
+    return _calc(target, rest, start)
 
 
 def _calc(target: int, nums: list[int], acc: int) -> bool:
@@ -26,15 +24,35 @@ def _calc(target: int, nums: list[int], acc: int) -> bool:
         return _calc(target, nums[1:], add) or _calc(target, nums[1:], mult)
 
 
-def _calc_with_concat(target: int, nums: list[int], acc: int) -> bool:
-    if len(nums) < 1:
-        return acc == target
+def calculator_backwards_with_concat(target: int, numbers: list[int]) -> bool:
+    return _calc_with_concat(target, numbers)
+
+
+def _calc_with_concat(acc: int, nums: list[int]) -> bool:
+    n = nums[-1]
+
+    if len(nums) == 1:
+        # Must use the identity result. 1 for multiplication, 0 for addition.
+        result = acc / n == 1 or acc - n == 0 or str(acc) == str(n)
+        return result
+
+    if acc - n >= 0:
+        new_acc = acc - n
+        add_possible = _calc_with_concat(new_acc, nums[:-1])
     else:
-        add = acc + nums[0]
-        mult = acc * nums[0]
-        concat = str(acc) + str(nums[0])
-        concat = int(concat)
-        return _calc_with_concat(target, nums[1:], add) or _calc_with_concat(target, nums[1:], mult) or _calc_with_concat(target, nums[1:], concat)
+        add_possible = False
+    if acc % n == 0:
+        new_acc = acc // n
+        mult_possible = _calc_with_concat(new_acc, nums[:-1])
+    else:
+        mult_possible = False
+    if str(acc).endswith(str(n)) and len(str(acc).removesuffix(str(n))) > 0:
+        new_acc = str(acc).removesuffix(str(n))
+        new_acc = int(new_acc)
+        concat_possible = _calc_with_concat(new_acc, nums[:-1])
+    else:
+        concat_possible = False
+    return add_possible or mult_possible or concat_possible
 
 
 class Day07Answers(Answers):
@@ -47,7 +65,7 @@ class Day07Answers(Answers):
         total = 0
         for line in self.lines:
             target, nums = parse_line(line)
-            can_be_calculated = calculator(target, nums, False)
+            can_be_calculated = calculator(target, nums)
             if can_be_calculated:
                 total += target
         return str(total)
@@ -57,7 +75,7 @@ class Day07Answers(Answers):
         total = 0
         for line in self.lines:
             target, nums = parse_line(line)
-            can_be_calculated = calculator(target, nums, True)
+            can_be_calculated = calculator_backwards_with_concat(target, nums)
             if can_be_calculated:
                 total += target
         return str(total)
