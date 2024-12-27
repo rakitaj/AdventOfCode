@@ -7,8 +7,9 @@ def single[T](iterable: Collection[T]) -> T:
     else:
         return iterable.__iter__().__next__()
 
+type NestedList[T] = list[T | NestedList]
 
-def flatten[T](array: Sequence[T] | Sequence[Sequence[T]]) -> list[T]:
+def flatten[T](array: NestedList[T]) -> list[T]:
     result: list[T] = []
     for e in array:
         if isinstance(e, list):

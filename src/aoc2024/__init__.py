@@ -4,3 +4,4 @@ from .day03 import Day03Answers
 from .day04 import Day04Answers
 from .day05 import Day05Answers
 from .day06 import Day06Answers
+from .day07 import Day07Answers

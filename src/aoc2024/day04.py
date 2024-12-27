@@ -31,7 +31,7 @@ def xmas_cross(grid: Grid[str], p: Point) -> bool:
     upper_right = grid.try_get(p.x + 1, p.y + 1) and grid.get(p.x + 1, p.y + 1)
     lower_left = grid.try_get(p.x - 1, p.y - 1) and grid.get(p.x - 1, p.y - 1)
     lower_right = grid.try_get(p.x + 1, p.y - 1) and grid.get(p.x + 1, p.y - 1)
-    if not all([upper_left, upper_right, lower_left, lower_right]):
+    if upper_left is False or upper_right is False or lower_left is False or lower_right is False:
         return False
     if mas(upper_left, lower_right) and mas(upper_right, lower_left):
         return True
