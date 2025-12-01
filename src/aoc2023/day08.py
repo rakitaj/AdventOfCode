@@ -1,8 +1,9 @@
-from src.common.dataload import DataLoader, Answers
-from typing import Sequence, Iterator
-from dataclasses import dataclass
-import re
 import math
+import re
+from dataclasses import dataclass
+from typing import Iterator, Sequence
+
+from src.common.dataload import Answers, DataLoader
 
 word_pattern = re.compile(r"(\w+)")
 
@@ -63,7 +64,7 @@ def parse(lines: Sequence[str]) -> Navigator:
 
 
 class Day08Answers(Answers):
-    def __init__(self):
+    def __init__(self) -> None:
         loader = DataLoader(2023, "day08.txt")
         self.data = loader.readlines_str()
 

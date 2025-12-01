@@ -1,5 +1,5 @@
 from src.common.dataload import DataLoader
-from src.common.grid import Grid, Distances
+from src.common.grid import Distances, Grid
 
 
 def visible_trees(grid: Grid[int]) -> set[tuple[int, int]]:

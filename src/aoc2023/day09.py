@@ -1,5 +1,6 @@
 from typing import Sequence
-from src.common.dataload import DataLoader, Answers
+
+from src.common.dataload import Answers, DataLoader
 from src.common.parsing import extract_integers
 
 
@@ -43,7 +44,7 @@ def previous_in_sequence(derivatives_list: list[list[int]]) -> list[list[int]]:
 
 
 class Day09Answers(Answers):
-    def __init__(self):
+    def __init__(self) -> None:
         loader = DataLoader(2023, "day09.txt")
         raw_data = loader.readlines_str()
         self.data = parse(raw_data)

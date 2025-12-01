@@ -1,5 +1,7 @@
 from __future__ import annotations
-from typing import Callable, Sequence
+
+from typing import Callable, Sequence, Iterator
+from enum import Enum
 
 
 class Point:
@@ -31,10 +33,15 @@ class Point:
             return Point(self.x - other.x, self.y - other.y)
         raise TypeError(f"Can only subtract types of Point. The argument passed is type {type(other)}.")
 
+    def __mul__(self, scalar: object) -> Point:
+        if isinstance(scalar, int):
+            return Point(self.x * scalar, self.y * scalar)
+        raise TypeError(f"Can only multiply by an interger. The argument passed is type {type(scalar)}.")
+
 
 def points_between(p0: Point, p1: Point) -> list[Point]:
     diff: Point = p1 - p0
-    points = list()
+    points: list[Point] = list()
     if diff.x > 0:
         for i in range(diff.x + 1):
             points.append(Point(p0.x + i, p0.y))
@@ -93,6 +100,10 @@ class Grid[T]:
         y_in_bounds = (0 <= y) and (y < self.y_size)
         return x_in_bounds and y_in_bounds
 
+    def set(self, x: int, y: int, value: T) -> None:
+        index = (y * self.x_size) + x
+        self.g[index] = value
+
     def find(self, target: T) -> tuple[int, int] | None:
         """Find the first occurance of the target in the grid."""
         for i, e in enumerate(self.g):
@@ -103,7 +114,7 @@ class Grid[T]:
         return None
 
     def find_all(self, target: T) -> list[tuple[int, int]]:
-        result = list()
+        result: list[tuple[int, int]] = list()
         for i, e in enumerate(self.g):
             if e == target:
                 y = i // self.x_size
@@ -111,22 +122,15 @@ class Grid[T]:
                 result.append((x, y))
         return result
 
-    def moves(self, x: int, y: int) -> list[tuple[int, int]]:
-        valid_moves: list[tuple[int, int]] = list()
-        potential_moves = [
-            (x - 1, y + 1),
-            (x - 1, y),
-            (x - 1, y - 1),
-            (x, y + 1),
-            (x, y - 1),
-            (x + 1, y + 1),
-            (x + 1, y),
-            (x + 1, y - 1),
-        ]
-        for move in potential_moves:
-            if self.try_get(move[0], move[1]) is True:
-                valid_moves.append(move)
-        return valid_moves
+    def iter_points(self) -> Iterator[Point]:
+        for i in range(len(self.g)):
+            y = i // self.x_size
+            x = i % self.x_size
+            yield Point(x, y)
+
+    @staticmethod
+    def moves() -> list[tuple[int, int]]:
+        return [(0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)]
 
     def moves_cardinal(self, x: int, y: int) -> list[tuple[int, int]]:
         valid_moves: list[tuple[int, int]] = list()
@@ -158,7 +162,8 @@ class Grid[T]:
 
     @staticmethod
     def from_lines_to_int_grid(lines: Sequence[str], split: bool) -> Grid[int]:
-        return Grid.from_lines(lines, lambda x: int(x), split)
+        grid: Grid[int] = Grid.from_lines(lines, lambda x: int(x), split)
+        return grid
 
     @staticmethod
     def from_strings_no_spaces(lines: Sequence[str]) -> Grid[str]:
@@ -183,3 +188,22 @@ class Distances:
         self.down = 0
         self.left = 0
         self.right = 0
+
+
+class Direction(Enum):
+    UP = 1
+    RIGHT = 2
+    DOWN = 3
+    LEFT = 4
+
+    @staticmethod
+    def roate_right(direction: Direction) -> Direction:
+        match direction:
+            case Direction.UP:
+                return Direction.RIGHT
+            case Direction.RIGHT:
+                return Direction.DOWN
+            case Direction.DOWN:
+                return Direction.LEFT
+            case Direction.LEFT:
+                return Direction.UP

@@ -1,10 +1,11 @@
 from collections import deque
+
 from src.aoc2022.day05 import (
-    find_quantity,
-    populate_stacks,
-    parse_lines,
     execute_instructions,
     execute_instructions_2,
+    find_quantity,
+    parse_lines,
+    populate_stacks,
 )
 
 

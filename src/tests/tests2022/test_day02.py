@@ -1,4 +1,5 @@
 import pytest
+
 from src.aoc2022.day02 import rock_paper_scissors, rock_paper_scissors_2
 
 

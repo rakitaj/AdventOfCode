@@ -1,7 +1,8 @@
-from src.common.dataload import DataLoader, Answers
-from src.common.parsing import extract_integer
-from src.common.extensions import must
 from typing import Sequence
+
+from src.common.dataload import Answers, DataLoader
+from src.common.extensions import must
+from src.common.parsing import extract_integer
 
 
 def parse_line(line: str) -> tuple[int, set[int], set[int]]:
@@ -16,9 +17,11 @@ def parse_line(line: str) -> tuple[int, set[int], set[int]]:
 def card_points(winning_nums: set[int], card_nums: set[int]) -> int:
     intersection = winning_nums.intersection(card_nums)
     num_winning = len(intersection)
-    if num_winning == 0:
+    if num_winning <= 0:
         return 0
-    return 1 * (2 ** (num_winning - 1))
+    result = 1 * (2 ** (num_winning - 1))
+    assert type(result) == int
+    return result
 
 
 def cards_won(card_id: int, set1: set[int], set2: set[int]) -> list[int]:
@@ -50,7 +53,7 @@ def cards_won_algorithm(lines: Sequence[str]) -> list[int]:
 
 
 class Day04Answers(Answers):
-    def __init__(self):
+    def __init__(self) -> None:
         loader = DataLoader(2023, "day04.txt")
         self.data = loader.readlines_str()
 

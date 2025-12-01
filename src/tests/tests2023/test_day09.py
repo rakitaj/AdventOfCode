@@ -1,5 +1,6 @@
 import pytest
-from src.aoc2023.day09 import derivative, derivative_all, parse, next_in_sequence, previous_in_sequence
+
+from src.aoc2023.day09 import derivative, derivative_all, next_in_sequence, parse, previous_in_sequence
 
 sample_data = """0 3 6 9 12 15
 1 3 6 10 15 21

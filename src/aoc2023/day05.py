@@ -1,8 +1,9 @@
-from src.common.parsing import extract_integers
-from src.common.extensions import must
 from dataclasses import dataclass
 from typing import Sequence
-from src.common.dataload import DataLoader, Answers
+
+from src.common.dataload import Answers, DataLoader
+from src.common.extensions import must
+from src.common.parsing import extract_integers
 
 
 def is_empty_or_whitespace(string: str) -> bool:
@@ -106,7 +107,7 @@ def parse_range_offsets(lines: Sequence[str], i: int) -> tuple[int, OffsetMappin
 
 
 class Day05Answers(Answers):
-    def __init__(self):
+    def __init__(self) -> None:
         loader = DataLoader(2023, "day05.txt")
         self.data = loader.readlines_str()
 

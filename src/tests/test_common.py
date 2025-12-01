@@ -1,8 +1,9 @@
 import pytest
-from src.common.extensions import single, flatten
+
+from src.common.equations import quadratic, binary_permutations
+from src.common.extensions import flatten, single
 from src.common.grid import Grid, Point, points_between
 from src.common.parsing import extract_integer, extract_integers
-from src.common.equations import quadratic
 
 small_grid_input = """1 2 3
 4 5 6
@@ -16,7 +17,7 @@ def test_single() -> None:
 
 
 def test_grid() -> None:
-    grid = Grid.from_lines(small_grid_input, lambda x: int(x))
+    grid: Grid[int] = Grid.from_lines(small_grid_input, lambda x: int(x))
     assert grid.get(0, 0) == 1
     assert grid.get(1, 0) == 2
     assert grid.get(1, 2) == 8
@@ -42,9 +43,9 @@ def test_point_equality_different_types() -> None:
 
 def test_point_gt_lt_should_raise() -> None:
     with pytest.raises(TypeError):
-        Point(0, 0) < Point(5, 5)  # type: ignore
+        assert Point(0, 0) < Point(5, 5)  # type: ignore
     with pytest.raises(TypeError):
-        Point(0, 0) > Point(5, 5)  # type: ignore
+        assert Point(0, 0) > Point(5, 5)  # type: ignore
 
 
 def test_point_add() -> None:
@@ -57,6 +58,14 @@ def test_point_subtract() -> None:
     p1 = Point(10, 5)
     p2 = Point(12, 4)
     assert p1 - p2 == Point(-2, 1)
+
+
+def test_grid_yield_all_points():
+    points: list[Point] = list()
+    grid: Grid[int] = Grid.from_lines(small_grid_input, lambda x: int(x))
+    for p in grid.iter_points():
+        points.append(p)
+    assert len(points) == 9
 
 
 @pytest.mark.parametrize("target, expected", [(1, (0, 0)), (4, (0, 1)), (10, None)])
@@ -118,7 +127,7 @@ def test_extract_integer(string: str, expected: int):
 
 
 @pytest.mark.parametrize("string, expected", [("seeds: 79 14 55 13", [79, 14, 55, 13])])
-def test_extract_integers(string: str, expected: int):
+def test_extract_integers(string: str, expected: list[int]):
     actual = extract_integers(string)
     assert actual == expected
 
@@ -127,3 +136,8 @@ def test_extract_integers(string: str, expected: int):
 def test_quadratic_equation_solver(a: int, b: int, c: int, expected: tuple[int, int]):
     root1, root2 = quadratic(a, b, c)
     assert {root1, root2} == set(expected)
+
+
+def test_binary_permutations():
+    result = binary_permutations(4)
+    assert len(result) == 16

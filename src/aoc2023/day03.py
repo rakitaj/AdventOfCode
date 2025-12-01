@@ -1,6 +1,7 @@
-from typing import Sequence
-from src.common.dataload import DataLoader, Answers
 import re
+from typing import Sequence
+
+from src.common.dataload import Answers, DataLoader
 
 pattern_numbers = re.compile(r"(\d+)")
 
@@ -80,7 +81,7 @@ def gear_numbers(prev_line: str, line: str, next_line: str) -> list[int]:
 
 
 class Day03Answers(Answers):
-    def __init__(self):
+    def __init__(self) -> None:
         loader = DataLoader(2023, "day03.txt")
         self.data = loader.readlines_str()
 

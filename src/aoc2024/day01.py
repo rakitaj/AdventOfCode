@@ -12,7 +12,6 @@ def partition_data(lines: list[list[int]]) -> tuple[list[int], list[int]]:
 
 
 class Day01Answers(Answers):
-
     def __init__(self):
         loader = DataLoader(2024, "day01.txt")
         self.data = loader.readlines_int()

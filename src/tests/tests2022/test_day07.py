@@ -1,5 +1,6 @@
 import pytest
-from src.aoc2022.day07 import lex_instruction, Lexer, FileSystemParser, filter_and_sum
+
+from src.aoc2022.day07 import FileSystemParser, Lexer, filter_and_sum, lex_instruction
 
 tiny_data = """$ cd /
 $ ls

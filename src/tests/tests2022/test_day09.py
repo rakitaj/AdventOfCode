@@ -1,5 +1,5 @@
+from src.aoc2022.day09 import parse_data, tail_visited_once, update_tail
 from src.common.grid import Point
-from src.aoc2022.day09 import update_tail, parse_data, tail_visited_once
 
 tiny_data = """R 4
 U 4

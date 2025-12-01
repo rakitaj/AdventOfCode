@@ -1,8 +1,9 @@
-from typing import Callable
+from heapq import heappop, heappush
 from string import ascii_lowercase
-from src.common.grid import Grid, Point
+from typing import Callable
+
 from src.common.dataload import DataLoader
-from heapq import heappush, heappop
+from src.common.grid import Grid, Point
 
 
 def height(s: str) -> int:

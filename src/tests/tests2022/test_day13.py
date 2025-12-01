@@ -1,5 +1,6 @@
-from src.aoc2022.day13 import compare_lines
 import pytest
+
+from src.aoc2022.day13 import compare_lines
 
 small_data = """[1,1,3,1,1]
 [1,1,5,1,1]

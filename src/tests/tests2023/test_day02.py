@@ -1,5 +1,6 @@
 import pytest
-from src.aoc2023.day02 import parse_and_test_line, CubeCounts
+
+from src.aoc2023.day02 import CubeCounts, parse_and_test_line
 
 cube_predicate = CubeCounts(12, 13, 14)
 

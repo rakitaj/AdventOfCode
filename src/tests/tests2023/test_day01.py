@@ -1,5 +1,6 @@
-from src.aoc2023.day01 import parse_digits, parse_string_digits, _part02_answer
 import pytest
+
+from src.aoc2023.day01 import _part02_answer, parse_digits, parse_string_digits
 
 
 @pytest.mark.parametrize(

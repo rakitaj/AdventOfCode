@@ -1,5 +1,7 @@
 from __future__ import annotations
+
 from typing import Sequence
+
 from src.common.dataload import DataLoader
 
 
@@ -78,7 +80,7 @@ def parse_data(lines: Sequence[str]) -> list[Instruction]:
         if len(parts) == 1:
             result.append(NoOp())
         else:
-            op, num = parts
+            _op, num = parts
             result.append(AddX(int(num)))
     return result
 

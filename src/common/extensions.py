@@ -7,8 +7,9 @@ def single[T](iterable: Collection[T]) -> T:
     else:
         return iterable.__iter__().__next__()
 
+type NestedList[T] = list[T | NestedList]
 
-def flatten[T](array: Sequence[T]) -> list[T]:
+def flatten[T](array: NestedList[T]) -> list[T]:
     result: list[T] = []
     for e in array:
         if isinstance(e, list):
@@ -24,3 +25,10 @@ def must[T](value: T | None) -> T:
     if value is None:
         raise ValueError("Called not_null on a value which is None.")
     return value
+
+
+def indexof[T](elements: Sequence[T], value: T) -> int:
+    for i, e in enumerate(elements):
+        if e == value:
+            return i
+    return -1

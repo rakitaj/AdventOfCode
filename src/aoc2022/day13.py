@@ -1,6 +1,7 @@
-from typing import Any
-from src.common.dataload import DataLoader
 import json
+from typing import Any
+
+from src.common.dataload import DataLoader
 
 # Results - part 1
 # 4554 - too low
