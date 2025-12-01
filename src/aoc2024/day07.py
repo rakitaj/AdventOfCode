@@ -1,4 +1,3 @@
-from typing import Callable
 from src.common.parsing import extract_integers
 from src.common.dataload import Answers, DataLoader, timed
 
@@ -47,8 +46,8 @@ def _calc_with_concat(acc: int, nums: list[int]) -> bool:
     else:
         mult_possible = False
     if str(acc).endswith(str(n)) and len(str(acc).removesuffix(str(n))) > 0:
-        new_acc = str(acc).removesuffix(str(n))
-        new_acc = int(new_acc)
+        temp = str(acc).removesuffix(str(n))
+        new_acc = int(temp)
         concat_possible = _calc_with_concat(new_acc, nums[:-1])
     else:
         concat_possible = False

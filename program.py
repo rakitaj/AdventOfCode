@@ -4,7 +4,7 @@ from src.aoc2024 import *
 
 for answers in Answers.__subclasses__():
     day = answers.__module__.split(".")[-1]
-    instance = answers()
+    instance = answers()  # type: ignore[abstract]
     print(f"Advent of Code 2024: {day}-1")
     print(instance.part1())
     print(f"Advent of Code 2024: {day}-2")
